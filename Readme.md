@@ -1,18 +1,8 @@
 
-A template project with a Makefile that supports sub-directories.
+# Super Tiles: "The Ultimate Sliding Tile Puzzle Game for Nintendo Game Boy!"
 
-The Makefile will automatically detect and compile new source files
-when they are added to the "src" and "res" directories.
+## Currently in development by Aidan Schneider (Absent Corner)
 
-Project directories
-  - src: Main program source files (.c, .h, .s) can go here
-  - res: Program graphics and audio source files (.c, .h, .s) can go here
-  - obj: Compiled ROM (.gb) and debug files go in this directory
+Thanks for checking out my project! I'm planning on finishing this around the end of 2024... minimum Viable Product expected by September 1.
 
-
-== Sprite and Background tiles from: ==
-
-https://sondanielson.itch.io/gameboy-simple-rpg-tileset
-"Licence is under CCA so you can use these assets both privately and commercially"
-"You are free to use them as is or modify them to your liking. All i ask is you credit me if you do use them please :)"
-
+For anyone wondering, my favorite part to work on so far has been the soundtrack! I'll be uploading oscilloscope views of the whole thing once it's finished on the Absent Corner YouTube channel, so stay tuned for that!
