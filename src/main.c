@@ -1,6 +1,7 @@
 #include <gb/gb.h>
 #include <stdint.h>
 #include <rand.h>
+#include "screen-ops.h"
 #include "../res/bkg_title.h"
 #include "../res/spr_star.h"
 
@@ -37,6 +38,38 @@ void main(void)
         // {
         //     scroll_sprite(0, 1, 0);
         // }
+        if (input & J_A)
+        {
+            ShakeScreen(1, 2, 0, 20);
+        }
+        else if (input & J_B)
+        {
+            ShakeScreen(1, 2, 1, 20);
+        }
+
+        if (input & J_START)
+        {
+            if (BGP_REG == NTRL)
+            {
+                BlkFadeOut(10);
+            }
+            else if (BGP_REG == BLK3)
+            {
+                BlkFadeIn(10);
+            }
+        }
+
+        else if (input & J_SELECT)
+        {
+            if (BGP_REG == NTRL)
+            {
+                WhtFadeOut(1);
+            }
+            else if (BGP_REG == WHT3)
+            {
+                WhtFadeIn(1);
+            }
+        }
 
         for (uint8_t i = 0; i < 8; i++)
         {
@@ -63,7 +96,7 @@ void main(void)
             framecount &= 0x00;
         }
         // Done processing, yield CPU and wait for start of next frame
-        vsync();
+        wait_vbl_done();
     }
 }
 

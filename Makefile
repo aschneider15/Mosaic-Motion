@@ -58,4 +58,5 @@ prepare:
 
 clean:
 #	rm -f  *.gb *.ihx *.cdb *.adb *.noi *.map
-	rmdir /S /Q $(OBJDIR)
+	- rm -f $(OBJDIR)/*
+	rmdir $(OBJDIR)
