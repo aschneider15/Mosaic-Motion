@@ -2,6 +2,7 @@
     "files.associations": {
         "dungeon_tiles.h": "c",
         "bkg_title.h": "c",
-        "stdint.h": "c"
+        "stdint.h": "c",
+        "title-scene.h": "c"
     }
 }

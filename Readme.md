@@ -8,6 +8,12 @@ For anyone wondering, my favorite part to work on so far has been the soundtrack
 
 ## Boring Stuff
 
+### Resources:
+
+- [Game Boy Pan Docs](https://gbdev.io/pandocs/About.html)
+- [GBDK Documentation](https://gbdk-2020.github.io/gbdk-2020/docs)
+- [Larold's Jubilant Junkyard](https://laroldsjubilantjunkyard.com/)
+
 ### Naming Conventions:
 
 | Item              | Convention                  |

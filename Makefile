@@ -57,6 +57,5 @@ prepare:
 	mkdir $(OBJDIR)
 
 clean:
-#	rm -f  *.gb *.ihx *.cdb *.adb *.noi *.map
-	- rm -f $(OBJDIR)/*
-	rmdir $(OBJDIR)
+	- del /Q $(OBJDIR)\*  
+	- rmdir $(OBJDIR)

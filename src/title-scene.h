@@ -2,9 +2,10 @@
 #include <stdint.h>
 #include "../res/bkg_title.h"
 #include "../res/spr_star.h"
+#include "./screen-ops.h"
 
 /* Initialize the background and sprites of the scene */
-void InitGraphics_Title(void);
+void TitleInitGraphics(void);
 
-/* Operates the actions that sprites perform on a frame-by-frame basis */
-void SpriteActivity_Title(void);
+/* Operates the main loop for the Title scene */
+void TitleMainLoop(void);
