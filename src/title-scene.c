@@ -22,54 +22,57 @@ void InitGraphics_Title(void)
 
     // Turn the background map, window, sprite layer on to make it visible
     SHOW_BKG;
-    SHOW_WIN;
     SHOW_SPRITES;
 }
 
 void TitleMainLoop(void)
 {
+    
+    uint8_t input = 0x00;
+
     InitGraphics_Title();
-    while (1)
+    
+    while (!(input & J_START))
     {
-        uint8_t input = joypad();
+        input = joypad();
         
         for (uint8_t i = 0; i < 8; i++)
         {
             scroll_sprite(i, 4, 0);
         }
 
-        if (input & J_A)
-        {
-            ShakeScreen(1, 2, 0, 20);
-        }
-        else if (input & J_B)
-        {
-            ShakeScreen(1, 2, 1, 20);
-        }
+        // if (input & J_A)
+        // {
+        //     ShakeScreen(1, 2, 0, 20);
+        // }
+        // else if (input & J_B)
+        // {
+        //     ShakeScreen(1, 2, 1, 20);
+        // }
 
-        if (input & J_START)
-        {
-            if (BGP_REG == NTRL)
-            {
-                BlkFadeOut(10);
-            }
-            else if (BGP_REG == BLK3)
-            {
-                BlkFadeIn(10);
-            }
-        }
+        // if (input & J_START)
+        // {
+        //     if (BGP_REG == NTRL)
+        //     {
+        //         BlkFadeOut(10);
+        //     }
+        //     else if (BGP_REG == BLK3)
+        //     {
+        //         BlkFadeIn(10);
+        //     }
+        // }
 
-        else if (input & J_SELECT)
-        {
-            if (BGP_REG == NTRL)
-            {
-                WhtFadeOut(1);
-            }
-            else if (BGP_REG == WHT3)
-            {
-                WhtFadeIn(1);
-            }
-        }
+        // else if (input & J_SELECT)
+        // {
+        //     if (BGP_REG == NTRL)
+        //     {
+        //         WhtFadeOut(1);
+        //     }
+        //     else if (BGP_REG == WHT3)
+        //     {
+        //         WhtFadeIn(1);
+        //     }
+        // }
 
         // Done processing, yield CPU and wait for start of next frame
         vsync();
