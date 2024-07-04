@@ -57,5 +57,5 @@ prepare:
 	mkdir $(OBJDIR)
 
 clean:
-	- del /Q $(OBJDIR)\*  
+	- rm /Q $(OBJDIR)\*  
 	- rmdir $(OBJDIR)
