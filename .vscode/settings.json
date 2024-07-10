@@ -3,6 +3,11 @@
         "dungeon_tiles.h": "c",
         "bkg_title.h": "c",
         "stdint.h": "c",
-        "title-scene.h": "c"
+        "title-scene.h": "c",
+        "tiles_general.h": "c",
+        "uimap_dialogbox.h": "c",
+        "dialogbox.h": "c",
+        "spr_star.h": "c",
+        "string.h": "c"
     }
 }

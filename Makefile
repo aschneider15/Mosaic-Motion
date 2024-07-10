@@ -55,7 +55,3 @@ $(BINS):	$(OBJS)
 
 prepare:
 	mkdir $(OBJDIR)
-
-clean:
-	- rm /Q $(OBJDIR)\*  
-	- rmdir $(OBJDIR)
