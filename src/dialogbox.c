@@ -6,20 +6,36 @@ void SetDialogTiles(void)
     set_win_tiles(0, 0, uimap_dialogbox_WIDTH >> 3, uimap_dialogbox_HEIGHT >> 3, uimap_dialogbox_map);
 }
 
-void SetText(uint8_t phrase[36], uint8_t text_speed)
+void SetText(uint8_t phrase[36])
 {
     uint8_t i;
     for (i = 0; i < 36; i++)
     {
         if (i < 18)
         {
-            set_win_tile_xy(i + 1, 1, ConvertLetterToTile(phrase[i]));
+            // terminator character detected - move to the next line
+            if (phrase[i] == '/')
+            {
+                i = 17;
+            }
+            else
+            {
+                set_win_tile_xy(i + 1, 1, ConvertLetterToTile(phrase[i]));
+            }
         }
         else
         {
-            set_win_tile_xy(i - 17, 3, ConvertLetterToTile(phrase[i]));
+            // terminator character detected - shortcut to end of dialogbox
+            if (phrase[i] == '/')
+            {
+                i = 35;
+            }
+            else
+            {
+                set_win_tile_xy(i - 17, 3, ConvertLetterToTile(phrase[i]));
+            }
         }
-        PerformantDelay(text_speed);
+        IncrementFrame();
     }
     return;
 }
@@ -116,19 +132,24 @@ uint8_t ConvertLetterToTile(char let)
     return out;
 }
 
-void DisplayDialogBox(uint8_t phrase[36], uint8_t text_speed, uint8_t label[17])
+void DisplayDialogBox(uint8_t phrase[36], uint8_t label[17])
 {
     uint8_t input = 0x00;
     SetDialogTiles();
     SetLabel(label);
-    SetText(phrase, text_speed);
     SHOW_WIN;
+    SetText(phrase);
     while (!(input & J_A))
     {
         input = joypad();
-        set_win_tile_xy(0x12, 0x04, 0x2D);
-        PerformantDelay(6);
-        set_win_tile_xy(0x12, 0x04, 0x46);
-        PerformantDelay(6);
+        if (GetFrameCount() % 8 == 0)
+        {
+            set_win_tile_xy(0x12, 0x04, 0x2D);
+        }
+        if (GetFrameCount() % 8 == 4)
+        {
+            set_win_tile_xy(0x12, 0x04, 0x46);
+        }
+        IncrementFrame();
     }
 }
