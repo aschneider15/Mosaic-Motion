@@ -134,6 +134,7 @@ uint8_t ConvertLetterToTile(char let)
 
 void DisplayDialogBox(uint8_t phrase[36], uint8_t label[17])
 {
+    move_win(7, 104);
     uint8_t input = 0x00;
     SetDialogTiles();
     SetLabel(label);

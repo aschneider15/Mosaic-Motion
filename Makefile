@@ -16,7 +16,7 @@ LCC = $(GBDK_HOME)bin/lcc
 
 
 # You can set the name of the .gb ROM file here
-PROJECTNAME    = SuperTiles
+PROJECTNAME    = MosaicMotion
 
 SRCDIR      = src
 OBJDIR      = obj
