@@ -1,0 +1,3 @@
+png2asset 'newasset'.png -source_tileset tiles_general.png -spr8x8 -map -noflip
+
+Rather than use 'tile_origin', you have to manually set the resulting tile origin to 0, otherwise you have trouble with the tiles in VRAM being offset by 96. 

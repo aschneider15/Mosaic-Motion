@@ -8,6 +8,10 @@
         "uimap_dialogbox.h": "c",
         "dialogbox.h": "c",
         "spr_star.h": "c",
-        "string.h": "c"
+        "string.h": "c",
+        "metasprites.h": "c",
+        "platform.h": "c",
+        "standard-mode-scene.h": "c",
+        "tiles_gonefishing.h": "c"
     }
 }

@@ -140,7 +140,7 @@ void DisplayDialogBox(uint8_t phrase[36], uint8_t label[17])
     SetLabel(label);
     SHOW_WIN;
     SetText(phrase);
-    while (!(input & J_A))
+    while (!(input & J_A || input & J_B))
     {
         input = joypad();
         if (GetFrameCount() % 8 == 0)

@@ -3,6 +3,7 @@
 void InitGraphics_Title(void)
 {
     // Load Background tiles and then map
+    set_bkg_data(tiles_general_TILE_ORIGIN, tiles_general_TILE_COUNT, tiles_general_tiles);
     set_bkg_data(bkg_title_TILE_ORIGIN, bkg_title_TILE_COUNT, bkg_title_tiles);
 
     // right shift 3 for both width and height because tiles are 8x8... faster than integer division
@@ -19,6 +20,7 @@ void InitGraphics_Title(void)
 
 void TitleMainLoop(void)
 {
+    
     uint8_t input = 0x00;
 
     InitGraphics_Title();
@@ -27,7 +29,11 @@ void TitleMainLoop(void)
     uint8_t cursor_y = 80;
     uint8_t temp_tile = 0x00;
 
-    while (1)
+    SHOW_BKG;
+    SHOW_SPRITES;
+    WhtFadeIn(4);
+
+    while (!(input == J_START))
     {
         input = joypad();
 
@@ -39,7 +45,8 @@ void TitleMainLoop(void)
 
         if((input & J_UP) && (input & J_SELECT) && (input & J_B))
         {
-            DisplayDialogBox("DO YOU WANT TO    DELETE SAVED DATA?", "WARNING");
+            DisplayDialogBox("DELETE ALL        SAVED DATA?       ", "WARNING");
+            HIDE_WIN;
         }
 
 
@@ -84,4 +91,9 @@ void TitleMainLoop(void)
         // Done processing, yield CPU and wait for start of next frame
         IncrementFrame();
     }
+
+    WhtFadeOut(4);
+    HIDE_BKG;
+    HIDE_WIN;
+    HIDE_SPRITES;
 }
