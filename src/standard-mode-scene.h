@@ -15,25 +15,8 @@
 #define BOARD_DIMENSION 12
 #define BOARD_DIMENSION_PX 96
 
-// The non-constant data in which the original puzzle's arrangement is represented.
-static uint8_t defualt_puzzle_map[144] =
-{
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-};
-
-// The non-constant data in which the current puzzle's arrangement is represented.
-static uint8_t current_puzzle_map[144] =
+// The non-constant data in which the puzzle's current arrangement is represented.
+static uint8_t puzzle_map[144] =
 {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -50,9 +33,11 @@ static uint8_t current_puzzle_map[144] =
 };
 
 static uint8_t cur_arrange[36]; // Current arrangment of tiles in the puzzle
-static uint8_t prev_arrange[36]; // Previous arrangement of tiles in the puzzle
 
-static uint8_t board_size; // The size of a single dimension of the board in mosaic pieces. Square it to get the full board size
+static uint8_t game_won; // Check that confirms that the game is won. Is set using the function CheckWinCondition.
+
+static uint8_t piece_size; // The size of a single mosaic metatile in hardware tiles. Will be either 3 (easy), 4 (medium) or 6 (hard).
+static uint8_t board_size; // The size of the entire board in mosaic metatiles.
 static uint8_t cur_sprite_data[16]; // The sprite tiles of the mosaic piece being moved.
 
 static uint8_t blank_pos_x; // The x-position of the blank space. 
@@ -63,23 +48,9 @@ static uint8_t mibisecs; // The number of second-fractions since the start of th
 static uint8_t secs; // The number of seconds since the start of the puzzle.
 static uint8_t mins; // The number of minutes since the start of the puzzle. Along with seconds and mibiseconds, this is used in score calculation.
 
-/* Find the mosaic pieces associated with a particular arrangment index.
-    @param index The index of the arrangment piece.
- */
-uint8_t TileOffset(uint8_t index);
-
-/* Find the last index to be copied from the default puzzle map to the current puzzle map.
-    @param offset The offset index of the arrangement piece.
- */
-uint8_t CopyEnd(uint8_t offset);
-
 /* Fills the designated portion of VRAM for mosaic puzzle tiles. The number passed into it will determine which bank will be pulled from for puzzle data.
  */
 void GetPuzzle(uint8_t rand);
-
-/* Call every frame in order to re-draw the puzzle using the current arrangment. Checks if the current arrangment is the same as the previous before executing re-draw in order to save processing resources.
- */
-void DrawPuzzle(void);
 
 /* Call to initialize the puzzle's arrangement. This is to be called only once per round.
  */
