@@ -11,4 +11,4 @@
 void TitleInitGraphics(void);
 
 /* Operates the main loop for the Title scene */
-void TitleMainLoop(void);
+uint8_t TitleMainLoop(void);

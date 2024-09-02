@@ -143,11 +143,11 @@ void DisplayDialogBox(uint8_t phrase[36], uint8_t label[17])
     while (!(input & J_A || input & J_B))
     {
         input = joypad();
-        if (GetFrameCount() % 8 == 0)
+        if (g_framecounter % 8 == 0)
         {
             set_win_tile_xy(0x12, 0x04, 0x2D);
         }
-        if (GetFrameCount() % 8 == 4)
+        if (g_framecounter % 8 == 4)
         {
             set_win_tile_xy(0x12, 0x04, 0x46);
         }

@@ -14,9 +14,6 @@ extern uint8_t g_framecounter;
 void PerformantDelay(uint8_t frames);
 
 /* Call to increment the frame counter. Calling this function also calls vsync() in order to ensure smooth animation timing.*/
-void IncrementFrame(void);
-
-/* Call to access the current state of global static variable g_framecounter */
-uint8_t GetFrameCount(void);
+inline void IncrementFrame(void);
 
 #endif

@@ -10,7 +10,7 @@ void PerformantDelay(uint8_t frames)
     }
 }
 
-void IncrementFrame(void)
+inline void IncrementFrame(void)
 {
     g_framecounter++;
     if(g_framecounter >= 60)
@@ -18,9 +18,4 @@ void IncrementFrame(void)
         g_framecounter = 0;
     }
     vsync();
-}
-
-uint8_t GetFrameCount(void)
-{
-    return g_framecounter;
 }

@@ -9,25 +9,27 @@ void InitGraphics_Title(void)
     // right shift 3 for both width and height because tiles are 8x8... faster than integer division
     set_bkg_tiles(0, 0, bkg_title_WIDTH >> 3, bkg_title_HEIGHT >> 3, bkg_title_map);
 
+    set_sprite_data(0, tiles_general_TILE_COUNT, tiles_general_tiles);
+    set_sprite_tile(0, 0x4A);
+
     // Turn the background map, window, sprite layer on to make it visible
     SHOW_BKG;
     SHOW_SPRITES;
 
-    // DisplayDialogBox("THANKS FOR PLAYINGMOSAIC MOTION!    ", "/");
-    // DisplayDialogBox("YOUR SUPPORT MEANSSO MUCH.          ", "AIDAN");
     HIDE_WIN;
 }
 
-void TitleMainLoop(void)
+uint8_t TitleMainLoop(void)
 {
-    
+    uint8_t difficulty = 0x00;
     uint8_t input = 0x00;
 
     InitGraphics_Title();
 
-    uint8_t cursor_x = 72;
+    uint8_t cursor_x = 48;
     uint8_t cursor_y = 80;
-    uint8_t temp_tile = 0x00;
+
+    move_sprite(0, cursor_x, cursor_y);
 
     SHOW_BKG;
     SHOW_SPRITES;
@@ -37,55 +39,24 @@ void TitleMainLoop(void)
     {
         input = joypad();
 
-
-        if((input & J_A) && (input & J_B) && (input & J_START) && (input & J_SELECT))
+        if ((input & J_A) && (input & J_B) && (input & J_START) && (input & J_SELECT))
         {
             reset();
         }
 
-        if((input & J_UP) && (input & J_SELECT) && (input & J_B))
+        if ((input & J_UP) && difficulty > 0)
         {
-            DisplayDialogBox("DELETE ALL        SAVED DATA?       ", "WARNING");
-            HIDE_WIN;
-        }
-
-
-        if (input & J_UP)
-        {
-
-            temp_tile = get_bkg_tile_xy(cursor_x >> 3, (cursor_y - 8) >> 3);
-            set_bkg_tile_xy((cursor_x) >> 3, (cursor_y - 8) >> 3, get_bkg_tile_xy(cursor_x >> 3, cursor_y >> 3));
-            set_bkg_tile_xy(cursor_x >> 3, cursor_y >> 3, temp_tile);
             cursor_y -= 8;
-
-            scroll_sprite(0, 0, -8);
+            move_sprite(0, cursor_x, cursor_y);
+            difficulty--;
+            waitpadup();
         }
-        else if (input & J_DOWN)
+        else if ((input & J_DOWN) && difficulty < 2)
         {
-            temp_tile = get_bkg_tile_xy(cursor_x >> 3, (cursor_y + 8) >> 3);
-            set_bkg_tile_xy((cursor_x) >> 3, (cursor_y + 8) >> 3, get_bkg_tile_xy(cursor_x >> 3, cursor_y >> 3));
-            set_bkg_tile_xy(cursor_x >> 3, cursor_y >> 3, temp_tile);
             cursor_y += 8;
-
-            scroll_sprite(0, 0, 8);
-        }
-        else if (input & J_LEFT)
-        {
-            temp_tile = get_bkg_tile_xy((cursor_x - 8) >> 3, cursor_y >> 3);
-            set_bkg_tile_xy((cursor_x - 8) >> 3, (cursor_y) >> 3, get_bkg_tile_xy(cursor_x >> 3, cursor_y >> 3));
-            set_bkg_tile_xy(cursor_x >> 3, cursor_y >> 3, temp_tile);
-            cursor_x -= 8;
-
-            scroll_sprite(0, -8, 0);
-        }
-        else if (input & J_RIGHT)
-        {
-            temp_tile = get_bkg_tile_xy((cursor_x + 8) >> 3, cursor_y >> 3);
-            set_bkg_tile_xy((cursor_x + 8) >> 3, (cursor_y) >> 3, get_bkg_tile_xy(cursor_x >> 3, cursor_y >> 3));
-            set_bkg_tile_xy(cursor_x >> 3, cursor_y >> 3, temp_tile);
-            cursor_x += 8;
-
-            scroll_sprite(0, 8, 0);
+            move_sprite(0, cursor_x, cursor_y);
+            difficulty++;
+            waitpadup();
         }
 
         // Done processing, yield CPU and wait for start of next frame
@@ -96,4 +67,6 @@ void TitleMainLoop(void)
     HIDE_BKG;
     HIDE_WIN;
     HIDE_SPRITES;
+
+    return difficulty;
 }

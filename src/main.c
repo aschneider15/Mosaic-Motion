@@ -10,6 +10,7 @@ void main(void)
     // initialize random number generator with the Division register
     initrand(DIV_REG);
 
+    uint8_t difficulty;
     // extern Stack SceneStack;
     // initialize(&SceneStack);
 
@@ -17,7 +18,8 @@ void main(void)
     // Loop forever
     while (1)
     {
-        TitleMainLoop();
-        StandardModeMainLoop();
+
+        difficulty = TitleMainLoop();
+        StandardModeMainLoop(difficulty);
     }
 }
