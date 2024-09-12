@@ -133,17 +133,17 @@ void MoveMetaTile(uint8_t input)
             cur_arrange[old_blank] = cur_arrange[adjacent_tile];
             cur_arrange[adjacent_tile] = temp;
 
-            //set the background tiles so that blank becomes adjacent tile and adjacent tile becomes blank
+            // set the background tiles so that blank becomes adjacent tile and adjacent tile becomes blank
             set_bkg_tiles(4 + (blank_pos_x * piece_size), 1 + (blank_pos_y * piece_size), piece_size, piece_size, cur_sprite_data);
-            for(uint8_t i = 0; i < total_piece_size; i++)
+            for (uint8_t i = 0; i < total_piece_size; i++)
             {
                 cur_sprite_data[i] = 0x4F;
             }
-            set_bkg_tiles(4 + (blank_pos_x * piece_size), 1 + ((blank_pos_y - 1)*piece_size), piece_size, piece_size, cur_sprite_data);
+            set_bkg_tiles(4 + (blank_pos_x * piece_size), 1 + ((blank_pos_y - 1) * piece_size), piece_size, piece_size, cur_sprite_data);
 
             blank_pos_y--;
             operations++;
-            PerformantDelay(3);
+            waitpadup();
             CheckWinCondition();
         }
         return;
@@ -159,17 +159,17 @@ void MoveMetaTile(uint8_t input)
             cur_arrange[old_blank] = cur_arrange[adjacent_tile];
             cur_arrange[adjacent_tile] = temp;
 
-            //set the background tiles so that blank becomes adjacent tile and adjacent tile becomes blank
+            // set the background tiles so that blank becomes adjacent tile and adjacent tile becomes blank
             set_bkg_tiles(4 + (blank_pos_x * piece_size), 1 + (blank_pos_y * piece_size), piece_size, piece_size, cur_sprite_data);
-            for(uint8_t i = 0; i < total_piece_size; i++)
+            for (uint8_t i = 0; i < total_piece_size; i++)
             {
                 cur_sprite_data[i] = 0x4F;
             }
-            set_bkg_tiles(4 + (blank_pos_x * piece_size), 1 + ((blank_pos_y + 1)*piece_size), piece_size, piece_size, cur_sprite_data);
+            set_bkg_tiles(4 + (blank_pos_x * piece_size), 1 + ((blank_pos_y + 1) * piece_size), piece_size, piece_size, cur_sprite_data);
 
             blank_pos_y++;
             operations++;
-            PerformantDelay(3);
+            waitpadup();
             CheckWinCondition();
         }
         return;
@@ -185,9 +185,9 @@ void MoveMetaTile(uint8_t input)
             cur_arrange[old_blank] = cur_arrange[adjacent_tile];
             cur_arrange[adjacent_tile] = temp;
 
-            //set the background tiles so that blank becomes adjacent tile and adjacent tile becomes blank
+            // set the background tiles so that blank becomes adjacent tile and adjacent tile becomes blank
             set_bkg_tiles(4 + (blank_pos_x * piece_size), 1 + (blank_pos_y * piece_size), piece_size, piece_size, cur_sprite_data);
-            for(uint8_t i = 0; i < total_piece_size; i++)
+            for (uint8_t i = 0; i < total_piece_size; i++)
             {
                 cur_sprite_data[i] = 0x4F;
             }
@@ -195,7 +195,7 @@ void MoveMetaTile(uint8_t input)
 
             blank_pos_x--;
             operations++;
-            PerformantDelay(3);
+            waitpadup();
             CheckWinCondition();
         }
         return;
@@ -211,9 +211,9 @@ void MoveMetaTile(uint8_t input)
             cur_arrange[old_blank] = cur_arrange[adjacent_tile];
             cur_arrange[adjacent_tile] = temp;
 
-            //set the background tiles so that blank becomes adjacent tile and adjacent tile becomes blank
+            // set the background tiles so that blank becomes adjacent tile and adjacent tile becomes blank
             set_bkg_tiles(4 + (blank_pos_x * piece_size), 1 + (blank_pos_y * piece_size), piece_size, piece_size, cur_sprite_data);
-            for(uint8_t i = 0; i < total_piece_size; i++)
+            for (uint8_t i = 0; i < total_piece_size; i++)
             {
                 cur_sprite_data[i] = 0x4F;
             }
@@ -221,7 +221,7 @@ void MoveMetaTile(uint8_t input)
 
             blank_pos_x++;
             operations++;
-            PerformantDelay(3);
+            waitpadup();
             CheckWinCondition();
         }
         return;
@@ -315,6 +315,13 @@ void StandardModeMainLoop(uint8_t difficulty)
     // SHOW_SPRITES;
     WhtFadeIn(4);
 
+    NR52_REG = 0b10000000; // enable all sound
+    NR51_REG = 0xFF; // enable all channels
+    NR50_REG = 0x77; // turn on stereo speakers
+
+    extern const hUGESong_t boatship;
+    hUGE_init(&boatship);
+
     uint8_t input = 0x00;
     uint8_t i = 0, j = 0;
     g_framecounter = 1;
@@ -323,7 +330,7 @@ void StandardModeMainLoop(uint8_t difficulty)
     {
         input = joypad();
 
-        if((input & J_A) && (input & J_B) && (input & J_START) && (input & J_SELECT))
+        if ((input & J_A) && (input & J_B) && (input & J_START) && (input & J_SELECT))
         {
             reset();
         }

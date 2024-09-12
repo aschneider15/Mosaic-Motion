@@ -14,15 +14,15 @@ LCC = $(GBDK_HOME)bin/lcc
 # LCCFLAGS += -debug # Uncomment to enable debug output
 # LCCFLAGS += -v     # Uncomment for lcc verbose output
 
-
 # You can set the name of the .gb ROM file here
 PROJECTNAME    = MosaicMotion
 
 SRCDIR      = src
 OBJDIR      = obj
 RESDIR      = res
+BGMDIR		= huge
 BINS	    = $(OBJDIR)/$(PROJECTNAME).gb
-CSOURCES    = $(foreach dir,$(SRCDIR),$(notdir $(wildcard $(dir)/*.c))) $(foreach dir,$(RESDIR),$(notdir $(wildcard $(dir)/*.c)))
+CSOURCES    = $(foreach dir,$(SRCDIR),$(notdir $(wildcard $(dir)/*.c))) $(foreach dir,$(RESDIR),$(notdir $(wildcard $(dir)/*.c))) $(foreach dir,$(BGMDIR),$(notdir $(wildcard $(dir)/*.c)))
 ASMSOURCES  = $(foreach dir,$(SRCDIR),$(notdir $(wildcard $(dir)/*.s)))
 OBJS       = $(CSOURCES:%.c=$(OBJDIR)/%.o) $(ASMSOURCES:%.s=$(OBJDIR)/%.o)
 
@@ -40,6 +40,10 @@ $(OBJDIR)/%.o:	$(SRCDIR)/%.c
 $(OBJDIR)/%.o:	$(RESDIR)/%.c
 	$(LCC) $(LCCFLAGS) -c -o $@ $<
 
+# Compile .c files in "huge/" to .o object files
+$(OBJDIR)/%.o:	$(BGMDIR)/%.c
+	$(LCC) $(LCCFLAGS) -c -o $@ $<	
+
 # Compile .s assembly files in "src/" to .o object files
 $(OBJDIR)/%.o:	$(SRCDIR)/%.s
 	$(LCC) $(LCCFLAGS) -c -o $@ $<
@@ -50,8 +54,8 @@ $(OBJDIR)/%.s:	$(SRCDIR)/%.c
 	$(LCC) $(LCCFLAGS) -S -o $@ $<
 
 # Link the compiled object files into a .gb ROM file
-$(BINS):	$(OBJS)
-	$(LCC) $(LCCFLAGS) -o $(BINS) $(OBJS)
+$(BINS): $(OBJS)
+	$(LCC) $(LCCFLAGS) -o $(BINS) $(OBJS) -Wl-lhuge/hUGEDriver.lib
 
 prepare:
 	mkdir $(OBJDIR)

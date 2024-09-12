@@ -10,7 +10,7 @@ void InitGraphics_Title(void)
     set_bkg_tiles(0, 0, bkg_title_WIDTH >> 3, bkg_title_HEIGHT >> 3, bkg_title_map);
 
     set_sprite_data(0, tiles_general_TILE_COUNT, tiles_general_tiles);
-    set_sprite_tile(0, 0x4A);
+    set_sprite_tile(0, 0x49);
 
     // Turn the background map, window, sprite layer on to make it visible
     SHOW_BKG;
@@ -23,6 +23,21 @@ uint8_t TitleMainLoop(void)
 {
     uint8_t difficulty = 0x00;
     uint8_t input = 0x00;
+
+    uint8_t sprite_frame = 0x49;
+
+    // #define SFX_CH_RETRIGGER  0b11000000
+    // #define SFX_CH_ENABLE     0b10000000
+    // enable sound
+    NR52_REG = 0b10000000; // enable all sound
+    NR51_REG = 0xFF; // enable all channels
+    NR50_REG = 0x77; // turn on stereo speakers
+
+    // External song declaration
+    extern const hUGESong_t bgm_title;
+
+    // Initialize the music
+    hUGE_init(&bgm_title);
 
     InitGraphics_Title();
 
@@ -59,9 +74,24 @@ uint8_t TitleMainLoop(void)
             waitpadup();
         }
 
+        if((g_framecounter % 4) == 0)
+        {
+            set_sprite_tile(0, sprite_frame);
+            sprite_frame++;
+        }
+        if(sprite_frame > 0x4B) 
+        {
+            sprite_frame = 0x49;
+        }
+
         // Done processing, yield CPU and wait for start of next frame
         IncrementFrame();
     }
+
+    NR52_REG = 0x00;  // Disable all sound
+    NR51_REG = 0x00;  // Disable all channels
+    NR50_REG = 0x00;  // Mute both left and right speakers
+
 
     WhtFadeOut(4);
     HIDE_BKG;

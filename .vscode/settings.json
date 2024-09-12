@@ -12,6 +12,9 @@
         "metasprites.h": "c",
         "platform.h": "c",
         "standard-mode-scene.h": "c",
-        "tiles_gonefishing.h": "c"
+        "tiles_gonefishing.h": "c",
+        "gb.h": "c",
+        "hugedriver.h": "c",
+        "screen-ops.h": "c"
     }
 }

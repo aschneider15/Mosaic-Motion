@@ -1,5 +1,9 @@
+#ifndef TITLE_SCENE_H
+#define TITLE_SCENE_H
+
 #include <gb/gb.h>
 #include <stdint.h>
+#include "../huge/hUGEDriver.h"
 #include "./screen-ops.h"
 #include "./dialogbox.h"
 #include "../res/uimap_dialogbox.h"
@@ -12,3 +16,5 @@ void TitleInitGraphics(void);
 
 /* Operates the main loop for the Title scene */
 uint8_t TitleMainLoop(void);
+
+#endif

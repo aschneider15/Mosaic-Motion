@@ -3,6 +3,7 @@
 
 #include <gb/gb.h>
 #include <stdint.h>
+#include "../huge/hUGEDriver.h"
 
 #include "dialogbox.h"
 #include "screen-ops.h"
