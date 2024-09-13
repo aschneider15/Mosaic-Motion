@@ -37,7 +37,7 @@
 
 I've been a huge Game Boy fan for as long as I remember. I've been playing Game Boy games since I could read, having received a hand-me-down Teal GBC the summer after I turned six years old (mind you, this was well into the DS era; I'm only 21 as of writing this!) Playing Pokemon Yellow, Pocket Bomberman, Super Mario Land 2, and others on long car trips are some of my most cherished childhood memories. Later in high school, discovering games like Link's Awakening DX, Mole Mania, Pokemon GSC and Metroid II through the 3DS Virtual Console only furthered my interest. By the time I got to college, I was fortunate enough to be able to collect a few of the games I had never played before, like Dragon Quest 1&2 (and 3!), Tetris DX, and Kirby's Pinball Land, in addition to the Super Game Boy peripheral for Super Nintendo.
 
-Pair this with my fixation on computer programming (I've been coding since I was thirteen), and it was inevitable that I would discover the GBDK toochain. I've flirted with the idea of publishing Game Boy software since finding GB Studio when I was a junior in high school, but just never committed the time I needed to finish a polished product. My university's CS department requires its students to spend one semester developing and publishing a piece of software, and I saw it as the perfect chance to test my skills and harken back to a bygone era: the era of begging your parents to buy more AA-batteries; the era where you had to tilt the screen at _just_ the right angle to see anything; the era where blowing into your cartridge fixed it every time;
+Pair this with my fixation on computer programming (I've been coding since I was thirteen), and it was inevitable that I would discover the GBDK toolchain. I've flirted with the idea of publishing Game Boy software since finding GB Studio when I was a junior in high school, but just never committed the time I needed to finish a polished product. My university's CS department requires its students to spend one semester developing and publishing a piece of software, and I saw it as the perfect chance to test my skills and harken back to a bygone era: the era of begging your parents to buy more AA-batteries; the era where you had to tilt the screen at _just_ the right angle to see anything; the era where blowing into your cartridge fixed it every time;
 
 The era of the Game Boy.
 
@@ -143,7 +143,7 @@ Either through unlocking or a special button combination (or "cheat code"), I wo
 
 ## SGB Features
 
-As a Game Boy aficionado myself, I love it when games incorporate special features only available through playing the game using the SNES's Super Game Boy peripheral. As it turns out, GBDK supports a pretty robust variety of SGB features out of the box, including custom-made boarders, and sound effects played through the SNES's onboard SPC700 processor. I think it would be neat to have at least a unique and visually appealing boarder for Mosaic Motion.
+As a Game Boy aficionado myself, I love it when games incorporate special features only available through playing the game using the SNES's Super Game Boy peripheral. As it turns out, GBDK supports a pretty robust variety of SGB features out of the box, including custom-made borders, and sound effects played through the SNES's onboard SPC700 processor. I think it would be neat to have at least a unique and visually appealing border for Mosaic Motion.
 
 ## Profile System
 
