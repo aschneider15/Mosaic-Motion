@@ -319,8 +319,8 @@ void StandardModeMainLoop(uint8_t difficulty)
     NR51_REG = 0xFF; // enable all channels
     NR50_REG = 0x77; // turn on stereo speakers
 
-    extern const hUGESong_t boatship;
-    hUGE_init(&boatship);
+    extern const hUGESong_t bgm_howtoplay;
+    hUGE_init(&bgm_howtoplay);
 
     uint8_t input = 0x00;
     uint8_t i = 0, j = 0;

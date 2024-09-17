@@ -36,8 +36,6 @@ uint8_t TitleMainLoop(void)
     // External song declaration
     extern const hUGESong_t bgm_title;
 
-    // Initialize the music
-    hUGE_init(&bgm_title);
 
     InitGraphics_Title();
 
@@ -46,9 +44,13 @@ uint8_t TitleMainLoop(void)
 
     move_sprite(0, cursor_x, cursor_y);
 
+
     SHOW_BKG;
     SHOW_SPRITES;
     WhtFadeIn(4);
+
+    // Initialize the music
+    hUGE_init(&bgm_title);
 
     while (!(input == J_START))
     {

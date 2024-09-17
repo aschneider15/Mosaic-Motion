@@ -19,8 +19,8 @@
 *.gch
 *.pch
 
-# Libraries
-*.lib
+# Libraries (I need to keep hUGEDriver.lib!)
+# *.lib 
 *.a
 *.la
 *.lo
