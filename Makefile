@@ -13,6 +13,8 @@ LCC = $(GBDK_HOME)bin/lcc
 # For example, you can uncomment the line below to turn on debug output
 # LCCFLAGS += -debug # Uncomment to enable debug output
 # LCCFLAGS += -v     # Uncomment for lcc verbose output
+LCCFLAGS += -Wl-yt0x1B # Set an MBC for banking (1B-ROM+MBC5+RAM+BATT)
+LCCFLAGS += -Wl-j -Wm-ya4 -autobank -Wb-ext=.rel -Wb-v # MBC + Autobanking related flags
 
 # You can set the name of the .gb ROM file here
 PROJECTNAME    = MosaicMotion

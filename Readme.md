@@ -2,7 +2,7 @@
 
 ## Currently in development by Aidan Schneider (Absent Corner)
 
-### Thanks for checking out my project! 
+### Thanks for checking out my project!
 
 I'm planning on finishing this around the end of 2024... minimum viable product expected by September 1.
 
@@ -11,12 +11,34 @@ For anyone wondering, my favorite part to work on so far has been the soundtrack
 ### Personal Notes:
 
 - Memory Banking:
-    - Game & Watch Gallery 1 Specs are probably pretty safe to go off of:
-        - Cart Type: MBC1 + RAM + Battery
-        - ROM Size: 256 KiB
-        - RAM size: 8 KiB
+  - Game & Watch Gallery 1 Specs are probably pretty safe to go off of:
+    - Cart Type: MBC1 + RAM + Battery
+    - ROM Size: 256 KiB
+    - RAM size: 8 KiB
 
-## Boring Stuff
+## To Do List Draft
+
+### High Priority:
+
+| Task                                                           | Deadline | Done? |
+| -------------------------------------------------------------- | -------- | ----- |
+| Implement options menu                                         | 10/27    | n     |
+| Implement Time Attack game style                               | 10/27    | n     |
+| Figure out score calculation method for Strategiest game style | 10/27    | n     |
+| Implement image preview                                        | 10/27    | n     |
+| Implement basic metasprite functionality                       | 10/30    | n     |
+
+### Med Priority
+
+| Task                                     | Deadline (optional) |
+| ---------------------------------------- | ------------------- |
+| Design and implement basic splash screen |                     |
+
+### Low Priority
+
+| Task | Deadline (optional) |
+| ---- | ------------------- |
+|      |                     |
 
 ## Resources
 
@@ -47,6 +69,6 @@ For anyone wondering, my favorite part to work on so far has been the soundtrack
 
 - GBKD-specific elements
 
-| Item              | Convention                  |
-| ----------------- | --------------------------- |
-| File Name         | multiple-words.c (.h, etc.) |
+| Item      | Convention                  |
+| --------- | --------------------------- |
+| File Name | multiple-words.c (.h, etc.) |

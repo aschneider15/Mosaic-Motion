@@ -3,6 +3,7 @@
 void GetPuzzle(uint8_t rand)
 {
     HIDE_SPRITES;
+
     set_bkg_data(tiles_gonefishing_TILE_ORIGIN, tiles_gonefishing_TILE_COUNT, tiles_gonefishing_tiles);
     set_bkg_tiles(0, 0, bkg_md_std_WIDTH >> 3, bkg_md_std_HEIGHT >> 3, bkg_md_std_map);
 
