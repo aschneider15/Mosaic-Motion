@@ -16,11 +16,10 @@
 #define uimap_dialogbox_COLORS_PER_PALETTE 4
 #define uimap_dialogbox_TOTAL_COLORS 4
 #define uimap_dialogbox_MAP_ATTRIBUTES 0
+extern const unsigned char uimap_dialogbox_map[100];
+#define uimap_dialogbox_map_attributes uimap_dialogbox_map
 
 BANKREF_EXTERN(uimap_dialogbox)
 
-
-extern const unsigned char uimap_dialogbox_map[100];
-#define uimap_dialogbox_map_attributes uimap_dialogbox_map
 
 #endif

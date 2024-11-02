@@ -1,13 +1,20 @@
 #include "title-scene.h"
 
-void InitGraphics_Title(void)
+void TitleInit(void)
 {
     // Load Background tiles and then map
     set_bkg_data(tiles_general_TILE_ORIGIN, tiles_general_TILE_COUNT, tiles_general_tiles);
-    set_bkg_data(bkg_title_TILE_ORIGIN, bkg_title_TILE_COUNT, bkg_title_tiles);
+
+    // Switch to bank 2 and load the title background tiles
+    uint8_t _previous_bank = CURRENT_BANK;
+    SWITCH_ROM(2);
+
+    set_bkg_data(96, bkg_title_TILE_COUNT, bkg_title_tiles);
 
     // right shift 3 for both width and height because tiles are 8x8... faster than integer division
     set_bkg_tiles(0, 0, bkg_title_WIDTH >> 3, bkg_title_HEIGHT >> 3, bkg_title_map);
+
+    SWITCH_ROM(_previous_bank);
 
     set_sprite_data(0, tiles_general_TILE_COUNT, tiles_general_tiles);
     set_sprite_tile(0, 0x49);
@@ -37,7 +44,7 @@ uint8_t TitleMainLoop(void)
     extern const hUGESong_t bgm_title;
 
 
-    InitGraphics_Title();
+    TitleInit();
 
     uint8_t cursor_x = 48;
     uint8_t cursor_y = 80;
@@ -56,10 +63,7 @@ uint8_t TitleMainLoop(void)
     {
         input = joypad();
 
-        if ((input & J_A) && (input & J_B) && (input & J_START) && (input & J_SELECT))
-        {
-            reset();
-        }
+        SoftReset(input);
 
         if ((input & J_UP) && difficulty > 0)
         {

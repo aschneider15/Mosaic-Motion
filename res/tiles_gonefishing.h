@@ -11,17 +11,17 @@
 #define tiles_gonefishing_TILE_H 8
 #define tiles_gonefishing_WIDTH 96
 #define tiles_gonefishing_HEIGHT 96
-#define tiles_gonefishing_TILE_COUNT 111
+#define tiles_gonefishing_TILE_COUNT 113
 #define tiles_gonefishing_PALETTE_COUNT 1
 #define tiles_gonefishing_COLORS_PER_PALETTE 4
 #define tiles_gonefishing_TOTAL_COLORS 4
 #define tiles_gonefishing_MAP_ATTRIBUTES 0
+extern const unsigned char tiles_gonefishing_map[144];
+#define tiles_gonefishing_map_attributes tiles_gonefishing_map
 
 BANKREF_EXTERN(tiles_gonefishing)
 
-extern const uint8_t tiles_gonefishing_tiles[1776];
-
-extern const unsigned char tiles_gonefishing_map[144];
-#define tiles_gonefishing_map_attributes tiles_gonefishing_map
+extern const palette_color_t tiles_gonefishing_palettes[4];
+extern const uint8_t tiles_gonefishing_tiles[1808];
 
 #endif

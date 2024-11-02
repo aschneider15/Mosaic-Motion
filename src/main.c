@@ -3,6 +3,7 @@
 #include <rand.h>
 #include "../huge/hUGEDriver.h"
 #include "./title-scene.h"
+#include "./selection-scene.h"
 #include "./standard-mode-scene.h"
 
 void main(void)
@@ -24,8 +25,8 @@ void main(void)
     // Loop forever
     while (1)
     {
-
         difficulty = TitleMainLoop();
+        SelectionMainLoop();
         StandardModeMainLoop(difficulty);
     }
 }

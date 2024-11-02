@@ -1,13 +1,21 @@
 #include "standard-mode-scene.h"
 
+BANKREF_EXTERN(tiles_gonefishing)
+
 void GetPuzzle(uint8_t rand)
 {
     HIDE_SPRITES;
+
+    uint8_t previous_bank = _current_bank;
+
+    SWITCH_ROM_MBC5( BANK(tiles_gonefishing) );
 
     set_bkg_data(tiles_gonefishing_TILE_ORIGIN, tiles_gonefishing_TILE_COUNT, tiles_gonefishing_tiles);
     set_bkg_tiles(0, 0, bkg_md_std_WIDTH >> 3, bkg_md_std_HEIGHT >> 3, bkg_md_std_map);
 
     base_puzzle = tiles_gonefishing_map;
+
+    SWITCH_ROM(previous_bank);
 
     return;
 }
@@ -317,8 +325,8 @@ void StandardModeMainLoop(uint8_t difficulty)
     WhtFadeIn(4);
 
     NR52_REG = 0b10000000; // enable all sound
-    NR51_REG = 0xFF; // enable all channels
-    NR50_REG = 0x77; // turn on stereo speakers
+    NR51_REG = 0xFF;       // enable all channels
+    NR50_REG = 0x77;       // turn on stereo speakers
 
     extern const hUGESong_t bgm_howtoplay;
     hUGE_init(&bgm_howtoplay);
@@ -331,10 +339,7 @@ void StandardModeMainLoop(uint8_t difficulty)
     {
         input = joypad();
 
-        if ((input & J_A) && (input & J_B) && (input & J_START) && (input & J_SELECT))
-        {
-            reset();
-        }
+        SoftReset(input);
 
         if (!(input & 0x00))
         {

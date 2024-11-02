@@ -6,6 +6,7 @@
 #include "../huge/hUGEDriver.h"
 
 #include "dialogbox.h"
+#include "input-ops.h"
 #include "screen-ops.h"
 #include "timing-ops.h"
 #include "../res/bkg_md_std.h"

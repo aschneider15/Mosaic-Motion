@@ -15,6 +15,7 @@
         "tiles_gonefishing.h": "c",
         "gb.h": "c",
         "hugedriver.h": "c",
-        "screen-ops.h": "c"
+        "screen-ops.h": "c",
+        "sgb.h": "c"
     }
 }

@@ -9,15 +9,16 @@ GBDK_HOME = C:/gbdk/
 
 LCC = $(GBDK_HOME)bin/lcc 
 
+# You can set the name of the .gb ROM file here
+PROJECTNAME    = MosaicMotion
+
 # You can set flags for LCC here
 # For example, you can uncomment the line below to turn on debug output
 # LCCFLAGS += -debug # Uncomment to enable debug output
 # LCCFLAGS += -v     # Uncomment for lcc verbose output
-LCCFLAGS += -Wl-yt0x1B # Set an MBC for banking (1B-ROM+MBC5+RAM+BATT)
-LCCFLAGS += -Wl-j -Wm-ya4 -autobank -Wb-ext=.rel -Wb-v # MBC + Autobanking related flags
+LCCFLAGS += -Wl-yt0x1B # Set an MBC for banking (1B - ROM+MBC5+RAM+BATT)
+LCCFLAGS += -Wl-yoA -Wl-ya1 # MBC + Banking-related flags
 
-# You can set the name of the .gb ROM file here
-PROJECTNAME    = MosaicMotion
 
 SRCDIR      = src
 OBJDIR      = obj
