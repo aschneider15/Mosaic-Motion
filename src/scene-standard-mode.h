@@ -1,14 +1,13 @@
-#ifndef STANDARD_MODE_SCENE_H
-#define STANDARD_MODE_SCENE_H
+#ifndef SCENE_STANDARD_MODE_H
+#define SCENE_STANDARD_MODE_H
 
 #include <gb/gb.h>
 #include <stdint.h>
 #include "../huge/hUGEDriver.h"
 
-#include "dialogbox.h"
-#include "input-ops.h"
-#include "screen-ops.h"
-#include "timing-ops.h"
+#include "ops-vital.h"
+#include "ops-screen.h"
+#include "ops-timing.h"
 #include "../res/bkg_md_std.h"
 #include "../res/tiles_general.h"
 #include "../res/tiles_gonefishing.h"

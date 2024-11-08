@@ -2,9 +2,9 @@
 #include <stdint.h>
 #include <rand.h>
 #include "../huge/hUGEDriver.h"
-#include "./title-scene.h"
-#include "./selection-scene.h"
-#include "./standard-mode-scene.h"
+#include "./scene-title.h"
+#include "./scene-selection.h"
+#include "./scene-standard-mode.h"
 
 void main(void)
 {
@@ -25,6 +25,7 @@ void main(void)
     // Loop forever
     while (1)
     {
+        SWITCH_ROM( BANK(TitleMainLoop) );
         difficulty = TitleMainLoop();
         SelectionMainLoop();
         StandardModeMainLoop(difficulty);

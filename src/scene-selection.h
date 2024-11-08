@@ -1,14 +1,13 @@
-#ifndef SELECTION_SCENE_H
-#define SELECTION_SCENE_H
+#ifndef SCENE_SELECTION_H
+#define SCENE_SELECTION_H
 
 #include <gb/gb.h>
 #include <stdint.h>
 #include <gb/sgb.h>
-
 #include "../huge/hUGEDriver.h"
-#include "input-ops.h"
-#include "./screen-ops.h"
-#include "./dialogbox.h"
+
+#include "./ops-vital.h"
+#include "./ops-screen.h"
 #include "../res/tiles_general.h"
 #include "../res/bkg_selection.h"
 #include "../res/uimap_dialogbox.h"

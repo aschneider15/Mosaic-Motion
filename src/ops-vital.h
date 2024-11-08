@@ -1,0 +1,41 @@
+#ifndef OPS_VITAL_H
+#define OPS_VITAL_H
+
+#include <gb/gb.h>
+#include <stdint.h>
+#include <rand.h>
+
+/* Enables a soft reset input (A + B + Start + Select).
+    @param input The current player's input read from a call to joypad().
+    @returns 1 if selection is entered by pressing A, or -1 if phase is cancelled by pressing B.
+ */
+inline void SoftReset(uint8_t input);
+
+/* Allows for background data from a banked file to be loaded in another banked file.
+    @param first_tile Index of the first tile to write.
+    @param nb_tiles Number of tiles to write.
+    @param data Pointer to (2 bpp) source tile data.
+    @param bank The bank in which the desired tile data is stored.
+
+ */
+inline void SetBKGBankedData(uint8_t first_tile, uint8_t nb_tiles, const uint8_t *data, uint8_t bank);
+
+/* Waits until the user has let go of a given input before processing a new one. This is done by calling itself recursively. 
+   This function yields better battery life than waitpadup() because it doesn't eat up CPU cycles.
+    @param previous_input The player's previous input.
+ */
+inline void WaitNewInput(uint8_t previous_input);
+
+/* Global variable used to control most animations and non-halting delays. */
+extern uint8_t g_framecounter;
+
+/* Delays an action by waiting for vblank to occur for the given number of frames (originally written by GamingMonsters).
+    \param frames The number of frames meant to be delayed; 0 is the shortest delay, and 255 is the longest.
+*/
+void PerformantDelay(uint8_t frames);
+
+/* Call to increment the frame counter. Calling this function also calls vsync() in order to ensure smooth animation timing.*/
+inline void IncrementFrame(void);
+
+
+#endif

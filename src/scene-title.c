@@ -1,4 +1,6 @@
-#include "title-scene.h"
+#include "scene-title.h"
+
+#pragma bank 255
 
 void TitleInit(void)
 {
@@ -7,7 +9,7 @@ void TitleInit(void)
 
     // Switch to bank 2 and load the title background tiles
     uint8_t _previous_bank = CURRENT_BANK;
-    SWITCH_ROM(2);
+    SWITCH_ROM( BANK(bkg_title) );
 
     set_bkg_data(96, bkg_title_TILE_COUNT, bkg_title_tiles);
 
@@ -26,7 +28,8 @@ void TitleInit(void)
     HIDE_WIN;
 }
 
-uint8_t TitleMainLoop(void)
+BANKREF(TitleMainLoop)
+uint8_t TitleMainLoop(void) BANKED
 {
     uint8_t difficulty = 0x00;
     uint8_t input = 0x00;
@@ -70,14 +73,14 @@ uint8_t TitleMainLoop(void)
             cursor_y -= 8;
             move_sprite(0, cursor_x, cursor_y);
             difficulty--;
-            waitpadup();
+            WaitNewInput(input);
         }
         else if ((input & J_DOWN) && difficulty < 2)
         {
             cursor_y += 8;
             move_sprite(0, cursor_x, cursor_y);
             difficulty++;
-            waitpadup();
+            WaitNewInput(input);
         }
 
         if((g_framecounter % 4) == 0)

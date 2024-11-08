@@ -16,6 +16,16 @@
         "gb.h": "c",
         "hugedriver.h": "c",
         "screen-ops.h": "c",
-        "sgb.h": "c"
+        "sgb.h": "c",
+        "scene-standard-mode.h": "c",
+        "ops-vital.h": "c",
+        "scene-selection.h": "c",
+        "ops-screen.h": "c",
+        "ops-dialogbox.h": "c",
+        "bkg_md_std.h": "c",
+        "scene-title.h": "c",
+        "bkg_selection.h": "c",
+        "ops-timing.h": "c",
+        "border_default.h": "c"
     }
 }

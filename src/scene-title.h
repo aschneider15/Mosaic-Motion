@@ -4,11 +4,10 @@
 #include <gb/gb.h>
 #include <stdint.h>
 #include <gb/sgb.h>
-
 #include "../huge/hUGEDriver.h"
-#include "./screen-ops.h"
-#include "./dialogbox.h"
-#include "input-ops.h"
+
+#include "ops-vital.h"
+#include "./ops-screen.h"
 #include "../res/uimap_dialogbox.h"
 #include "../res/tiles_general.h"
 #include "../res/bkg_title.h"
@@ -19,6 +18,8 @@
 void TitleInit(void);
 
 /* Operates the main loop for the Title scene */
-uint8_t TitleMainLoop(void);
+uint8_t TitleMainLoop(void) BANKED;
+BANKREF_EXTERN(TitleMainLoop)
+
 
 #endif

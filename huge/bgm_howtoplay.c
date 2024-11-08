@@ -1,3 +1,5 @@
+#pragma bank 255
+
 #include "hUGEDriver.h"
 #include <stddef.h>
 
@@ -202,7 +204,7 @@ static const unsigned char P3[] = {
     DN(___,0,0x000),
 };
 static const unsigned char P4[] = {
-    DN(___,0,0xF05),
+    DN(F_7,3,0xF05),
     DN(___,0,0x000),
     DN(___,0,0x000),
     DN(___,0,0x000),
@@ -210,7 +212,7 @@ static const unsigned char P4[] = {
     DN(___,0,0x000),
     DN(___,0,0x000),
     DN(___,0,0x000),
-    DN(___,0,0xF05),
+    DN(F_7,3,0xF05),
     DN(___,0,0x000),
     DN(___,0,0x000),
     DN(___,0,0x000),
@@ -218,7 +220,7 @@ static const unsigned char P4[] = {
     DN(___,0,0x000),
     DN(___,0,0x000),
     DN(___,0,0x000),
-    DN(___,0,0xF05),
+    DN(F_7,3,0xF05),
     DN(___,0,0x000),
     DN(___,0,0x000),
     DN(___,0,0x000),
@@ -226,7 +228,15 @@ static const unsigned char P4[] = {
     DN(___,0,0x000),
     DN(___,0,0x000),
     DN(___,0,0x000),
-    DN(___,0,0xF05),
+    DN(F_7,3,0xF05),
+    DN(___,0,0x000),
+    DN(___,0,0x000),
+    DN(___,0,0x000),
+    DN(F_7,3,0xF03),
+    DN(___,0,0x000),
+    DN(___,0,0x000),
+    DN(___,0,0x000),
+    DN(F_7,3,0xF05),
     DN(___,0,0x000),
     DN(___,0,0x000),
     DN(___,0,0x000),
@@ -234,7 +244,7 @@ static const unsigned char P4[] = {
     DN(___,0,0x000),
     DN(___,0,0x000),
     DN(___,0,0x000),
-    DN(___,0,0xF05),
+    DN(F_7,3,0xF05),
     DN(___,0,0x000),
     DN(___,0,0x000),
     DN(___,0,0x000),
@@ -242,7 +252,7 @@ static const unsigned char P4[] = {
     DN(___,0,0x000),
     DN(___,0,0x000),
     DN(___,0,0x000),
-    DN(___,0,0xF05),
+    DN(F_7,3,0xF05),
     DN(___,0,0x000),
     DN(___,0,0x000),
     DN(___,0,0x000),
@@ -250,22 +260,14 @@ static const unsigned char P4[] = {
     DN(___,0,0x000),
     DN(___,0,0x000),
     DN(___,0,0x000),
-    DN(___,0,0xF05),
+    DN(F_7,3,0xF05),
     DN(___,0,0x000),
     DN(___,0,0x000),
     DN(___,0,0x000),
-    DN(___,0,0xF03),
-    DN(___,0,0x000),
-    DN(___,0,0x000),
-    DN(___,0,0x000),
-    DN(___,0,0xF05),
-    DN(___,0,0x000),
-    DN(___,0,0x000),
-    DN(___,0,0x000),
-    DN(___,0,0xF03),
-    DN(___,0,0x000),
-    DN(___,0,0x000),
-    DN(___,0,0x000),
+    DN(F_7,3,0xF03),
+    DN(F_7,3,0x000),
+    DN(F_7,3,0x000),
+    DN(F_7,3,0x000),
 };
 static const unsigned char P5[] = {
     DN(G_5,2,0xC0A),
@@ -1075,6 +1077,11 @@ static const hUGEWaveInstr_t wave_instruments[] = {
     {0,32,1,0,128},
     {0,32,2,0,128},
 };
+static const hUGENoiseInstr_t noise_instruments[] = {
+    {177,0,0,0,0},
+    {113,0,0,0,0},
+    {65,0,0,0,0},
+};
 
 static const unsigned char waves[] = {
     0,0,255,255,255,255,255,255,255,255,255,255,255,255,255,255,
@@ -1082,4 +1089,5 @@ static const unsigned char waves[] = {
     0,0,0,0,0,0,0,0,255,255,255,255,255,255,255,255,
 };
 
-const hUGESong_t bgm_howtoplay = {5, &order_cnt, order1, order2, order3,order4, duty_instruments, wave_instruments, NULL, NULL, waves};
+const void __at(255) __bank_bgm_howtoplay;
+const hUGESong_t bgm_howtoplay = {5, &order_cnt, order1, order2, order3,order4, duty_instruments, wave_instruments, noise_instruments, NULL, waves};

@@ -1,4 +1,4 @@
-#include "standard-mode-scene.h"
+#include "scene-standard-mode.h"
 
 BANKREF_EXTERN(tiles_gonefishing)
 
@@ -152,7 +152,7 @@ void MoveMetaTile(uint8_t input)
 
             blank_pos_y--;
             operations++;
-            waitpadup();
+            WaitNewInput(input);
             CheckWinCondition();
         }
         return;
@@ -178,7 +178,7 @@ void MoveMetaTile(uint8_t input)
 
             blank_pos_y++;
             operations++;
-            waitpadup();
+            WaitNewInput(input);
             CheckWinCondition();
         }
         return;
@@ -204,7 +204,7 @@ void MoveMetaTile(uint8_t input)
 
             blank_pos_x--;
             operations++;
-            waitpadup();
+            WaitNewInput(input);
             CheckWinCondition();
         }
         return;
@@ -230,7 +230,7 @@ void MoveMetaTile(uint8_t input)
 
             blank_pos_x++;
             operations++;
-            waitpadup();
+            WaitNewInput(input);
             CheckWinCondition();
         }
         return;

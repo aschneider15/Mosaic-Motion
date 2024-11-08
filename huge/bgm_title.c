@@ -1,3 +1,5 @@
+#pragma bank 255
+
 #include "hUGEDriver.h"
 #include <stddef.h>
 
@@ -1557,4 +1559,5 @@ static const unsigned char waves[] = {
     0,0,102,170,187,221,255,255,255,255,255,255,255,255,255,255,
 };
 
+const void __at(255) __bank_bgm_title;
 const hUGESong_t bgm_title = {3, &order_cnt, order1, order2, order3,order4, duty_instruments, wave_instruments, noise_instruments, NULL, waves};

@@ -17,6 +17,7 @@ PROJECTNAME    = MosaicMotion
 # LCCFLAGS += -debug # Uncomment to enable debug output
 # LCCFLAGS += -v     # Uncomment for lcc verbose output
 LCCFLAGS += -Wl-yt0x1B # Set an MBC for banking (1B - ROM+MBC5+RAM+BATT)
+LCCFLAGS += -autobank # Enable autobanking
 LCCFLAGS += -Wl-yoA -Wl-ya1 # MBC + Banking-related flags
 
 
@@ -29,7 +30,7 @@ CSOURCES    = $(foreach dir,$(SRCDIR),$(notdir $(wildcard $(dir)/*.c))) $(foreac
 ASMSOURCES  = $(foreach dir,$(SRCDIR),$(notdir $(wildcard $(dir)/*.s)))
 OBJS       = $(CSOURCES:%.c=$(OBJDIR)/%.o) $(ASMSOURCES:%.s=$(OBJDIR)/%.o)
 
-all:	prepare $(BINS)
+all: prepare $(BINS)
 
 compile.bat: Makefile
 	@echo "REM Automatically generated from Makefile" > compile.bat
@@ -62,3 +63,4 @@ $(BINS): $(OBJS)
 
 prepare:
 	mkdir $(OBJDIR)
+	

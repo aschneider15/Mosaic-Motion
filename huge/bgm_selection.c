@@ -1,3 +1,5 @@
+#pragma bank 255
+
 #include "hUGEDriver.h"
 #include <stddef.h>
 
@@ -305,4 +307,5 @@ static const unsigned char waves[] = {
     0,0,0,0,170,170,187,204,221,221,255,255,255,255,0,255,
 };
 
+const void __at(255) __bank_bgm_selection;
 const hUGESong_t bgm_selection = {3, &order_cnt, order1, order2, order3,order4, duty_instruments, wave_instruments, noise_instruments, NULL, waves};
