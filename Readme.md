@@ -30,9 +30,10 @@ For anyone wondering, my favorite part to work on so far has been the soundtrack
 
 ### Med Priority
 
-| Task                                     | Deadline (optional) |
-| ---------------------------------------- | ------------------- |
-| Design and implement basic splash screen |                     |
+| Task                                        | Deadline (optional) |
+| ------------------------------------------- | ------------------- |
+| Design and implement basic splash screen    |                     |
+| Make a list of fonts used in graphic design |                     |
 
 ### Low Priority
 

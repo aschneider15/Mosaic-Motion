@@ -188,7 +188,7 @@ void ModeSelection(void)
             phase = 4;
 
             // Scroll the background over to the music pane
-            HIDE_SPRITES;
+            move_sprite(0, 0, 0);
             for (uint8_t i = 0; i < 24; i++)
             {
                 scroll_bkg(4, 0);
@@ -212,6 +212,8 @@ void MusicSelection(void)
 {
     // prevent two subsequent A- or B-presses
     waitpadup();
+
+    HIDE_SPRITES;
 
     cursor_x = 88;
     cursor_y = 32;
@@ -256,6 +258,7 @@ void MusicSelection(void)
             WindowClose();
             move_bkg(0, 144);
             move_sprite(0, 0, 0);
+            PerformantDelay(15);
             WindowOpen();
 
             return;
@@ -294,6 +297,8 @@ void PuzzleSelection(void)
 
     NR51_REG = 0b11111111; // enable all sound channels
 
+    SHOW_SPRITES;
+
     /* Loop forever... at least until the break statments. */
     while (1)
     {
@@ -331,7 +336,7 @@ void PuzzleSelection(void)
             // left-shift by two, then update settings to account for current selection
             settings << 2;
             settings = settings | cur_selection;
-            phase = 5;
+            phase = 6;
 
             return;
         }
@@ -343,6 +348,7 @@ void PuzzleSelection(void)
             WindowClose();
             move_bkg(96, 0);
             move_sprite(0, 88, 32);
+            PerformantDelay(15);
             WindowOpen();
 
             return;
@@ -355,7 +361,7 @@ void PuzzleSelection(void)
 
 void WindowOpen(void)
 {
-    for (uint8_t i = 15; i > 0; i--)
+    for (uint8_t i = 14; i > 0; i--)
     {
         move_win(7, scroll_positions[i]);
         IncrementFrame();
@@ -429,6 +435,7 @@ uint8_t SelectionMainLoop(void)
             break;
 
         case 5:
+            PuzzleSelection();
             break;
 
         default:

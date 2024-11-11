@@ -3,9 +3,10 @@
 
 #include <gb/gb.h>
 #include <stdint.h>
-#include "ops-timing.h"
 #include <string.h>
 #include <stdio.h>
+#include "ops-timing.h"
+#include "ops-vital.h"
 #include "../res/uimap_dialogbox.h"
 #include "../res/tiles_general.h"
 

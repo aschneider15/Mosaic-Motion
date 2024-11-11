@@ -271,6 +271,7 @@ void DisplayDialogBox(uint8_t phrase[36], uint8_t label[17])
         {
             set_win_tile_xy(0x12, 0x04, 0x46);
         }
+        SoftReset(input);
         IncrementFrame();
     }
 }
