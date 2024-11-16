@@ -1,5 +1,5 @@
-#ifndef SCENE_STANDARD_MODE_H
-#define SCENE_STANDARD_MODE_H
+#ifndef SCENE_PUZZLE_SOLVE_H
+#define SCENE_PUZZLE_SOLVE_H
 
 #include <gb/gb.h>
 #include <stdint.h>

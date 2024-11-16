@@ -2,21 +2,14 @@
 
 #pragma bank 255
 
-void TitleInit(void)
+void TitleInit(void) BANKED
 {
     // Load Background tiles and then map
     set_bkg_data(tiles_general_TILE_ORIGIN, tiles_general_TILE_COUNT, tiles_general_tiles);
 
-    // Switch to bank 2 and load the title background tiles
-    uint8_t _previous_bank = CURRENT_BANK;
-    SWITCH_ROM( BANK(bkg_title) );
-
-    set_bkg_data(96, bkg_title_TILE_COUNT, bkg_title_tiles);
-
-    // right shift 3 for both width and height because tiles are 8x8... faster than integer division
-    set_bkg_tiles(0, 0, bkg_title_WIDTH >> 3, bkg_title_HEIGHT >> 3, bkg_title_map);
-
-    SWITCH_ROM(_previous_bank);
+    // Call nonbanked functions to load tile data and map data
+    SetBKGBankedData(96, bkg_title_TILE_COUNT, bkg_title_tiles, BANK(bkg_title));
+    SetTilemapBankedData(0, 0, bkg_title_WIDTH >> 3, bkg_title_HEIGHT >> 3, bkg_title_map, BANK(bkg_title));
 
     set_sprite_data(0, tiles_general_TILE_COUNT, tiles_general_tiles);
     set_sprite_tile(0, 0x49);

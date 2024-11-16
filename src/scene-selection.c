@@ -5,7 +5,7 @@ BANKREF_EXTERN(bkg_selection)
 void SelectionInit(void)
 {
     uint8_t previous_bank = _current_bank;
-    SWITCH_ROM( BANK(bkg_selection) );
+    SWITCH_ROM(BANK(bkg_selection));
 
     set_bkg_data(96, bkg_selection_TILE_COUNT, bkg_selection_tiles);
 
@@ -87,6 +87,7 @@ void DifficultySelection(void)
         }
 
         move_sprite(0, cursor_x, cursor_y);
+        WaitNewInput(input);
         IncrementFrame();
     }
 }
@@ -140,6 +141,7 @@ void StyleSelection(void)
         }
 
         move_sprite(0, cursor_x, cursor_y);
+        WaitNewInput(input);
         IncrementFrame();
     }
 }
@@ -204,6 +206,7 @@ void ModeSelection(void)
         }
 
         move_sprite(0, cursor_x, cursor_y);
+        WaitNewInput(input);
         IncrementFrame();
     }
 }
@@ -218,10 +221,9 @@ void MusicSelection(void)
     cursor_x = 88;
     cursor_y = 32;
 
-
     uint8_t cur_selection = 0;
     uint8_t input = 0;
-    
+
     move_sprite(0, cursor_x, cursor_y);
 
     SHOW_SPRITES;
@@ -258,7 +260,7 @@ void MusicSelection(void)
             WindowClose();
             move_bkg(0, 144);
             move_sprite(0, 0, 0);
-            PerformantDelay(15);
+            PerformantDelay(10);
             WindowOpen();
 
             return;
@@ -279,18 +281,18 @@ void MusicSelection(void)
         }
 
         move_sprite(0, cursor_x, cursor_y);
+        WaitNewInput(input);
         IncrementFrame();
     }
 }
 
-void PuzzleSelection(void) 
+void PuzzleSelection(void)
 {
     // prevent two subsequent A- or B-presses
     waitpadup();
 
     cursor_x = 15;
     cursor_y = 27;
-
 
     uint8_t cur_selection = 0;
     uint8_t input = 0;
@@ -318,18 +320,17 @@ void PuzzleSelection(void)
             cursor_y++;
         }
 
-        if(input & J_RIGHT && cursor_x < 18)
+        if (input & J_RIGHT && cursor_x < 18)
         {
             cur_selection++;
             cursor_x++;
         }
 
-        if(input & J_RIGHT && cursor_x > 15)
+        if (input & J_RIGHT && cursor_x > 15)
         {
             cur_selection--;
             cursor_x--;
         }
-
 
         if (input & J_A)
         {
@@ -355,12 +356,17 @@ void PuzzleSelection(void)
         }
 
         move_sprite(0, cursor_x, cursor_y);
+
+        // Not easy on the eyes
+        // set_bkg_data(0x4F, 1, tiles_general_tiles + 960 + (16 * (g_framecounter % 4)));
+        WaitNewInput(input);
         IncrementFrame();
     }
 }
 
 void WindowOpen(void)
 {
+    SHOW_WIN;
     for (uint8_t i = 14; i > 0; i--)
     {
         move_win(7, scroll_positions[i]);

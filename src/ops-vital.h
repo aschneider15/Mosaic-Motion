@@ -11,7 +11,7 @@
  */
 inline void SoftReset(uint8_t input);
 
-/* Allows for background data from a banked file to be loaded in another banked file.
+/* Allows for background data from a banked file to be loaded into another banked file.
     @param first_tile Index of the first tile to write.
     @param nb_tiles Number of tiles to write.
     @param data Pointer to (2 bpp) source tile data.
@@ -19,6 +19,16 @@ inline void SoftReset(uint8_t input);
 
  */
 inline void SetBKGBankedData(uint8_t first_tile, uint8_t nb_tiles, const uint8_t *data, uint8_t bank);
+
+/* Allows for tilemap data from a banked file to be loaded into another banked file
+    @param x X Start position in Background Map tile coordinates. Range 0-31
+    @param y Y Start-position in Background Map tile coordinates. Range 0-31
+    @param w Width of area to set in tiles. Range 1-32
+    @param h Height of area to set in tiles. Range 1-32
+    @param tiles Pointer to source tile map data
+    @param bank The bank in which the desired tilemap data is stored
+ */
+inline void SetTilemapBankedData(uint8_t x, uint8_t y, uint8_t w, uint8_t h, const uint8_t *tiles, uint8_t bank);
 
 /* Waits until the user has let go of a given input before processing a new one. This is done by calling itself recursively. 
    This function yields better battery life than waitpadup() because it doesn't eat up CPU cycles.

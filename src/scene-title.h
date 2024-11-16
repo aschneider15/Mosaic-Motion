@@ -15,11 +15,10 @@
 #include "../res/border_default.h"
 
 /* Initialize the background, sprites, music, etc. of the scene */
-void TitleInit(void);
+void TitleInit(void) BANKED;
 
 /* Operates the main loop for the Title scene */
 uint8_t TitleMainLoop(void) BANKED;
 BANKREF_EXTERN(TitleMainLoop)
-
 
 #endif

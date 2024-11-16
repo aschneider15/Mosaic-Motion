@@ -1,4 +1,4 @@
-#include "scene-standard-mode.h"
+#include "scene-puzzle-solve.h"
 
 BANKREF_EXTERN(tiles_gonefishing)
 
@@ -311,6 +311,9 @@ inline void CheckWinCondition(void)
 
 void StandardModeMainLoop(uint8_t difficulty)
 {
+    set_bkg_data(0, tiles_general_TILE_ORIGIN, tiles_general_tiles);
+    move_bkg(0, 0);
+
     game_won = 0;
     secs = 0;
     mins = 0;

@@ -4,7 +4,7 @@
 #include "../huge/hUGEDriver.h"
 #include "./scene-title.h"
 #include "./scene-selection.h"
-#include "./scene-standard-mode.h"
+#include "./scene-puzzle-solve.h"
 
 void main(void)
 {
@@ -25,7 +25,7 @@ void main(void)
     // Loop forever
     while (1)
     {
-        SWITCH_ROM( BANK(TitleMainLoop) );
+        SWITCH_ROM(BANK(TitleMainLoop));
         difficulty = TitleMainLoop();
         SelectionMainLoop();
         StandardModeMainLoop(difficulty);

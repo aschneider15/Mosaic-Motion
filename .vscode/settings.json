@@ -26,6 +26,8 @@
         "scene-title.h": "c",
         "bkg_selection.h": "c",
         "ops-timing.h": "c",
-        "border_default.h": "c"
+        "border_default.h": "c",
+        "scene-puzzle-solve.h": "c",
+        "uimap_select-curtain.h": "c"
     }
 }
