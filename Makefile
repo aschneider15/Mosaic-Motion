@@ -25,12 +25,18 @@ SRCDIR      = src
 OBJDIR      = obj
 RESDIR      = res
 BGMDIR		= huge
+SFXDIR		= huge/sfx
 BINS	    = $(OBJDIR)/$(PROJECTNAME).gb
 CSOURCES    = $(foreach dir,$(SRCDIR),$(notdir $(wildcard $(dir)/*.c))) $(foreach dir,$(RESDIR),$(notdir $(wildcard $(dir)/*.c))) $(foreach dir,$(BGMDIR),$(notdir $(wildcard $(dir)/*.c)))
 ASMSOURCES  = $(foreach dir,$(SRCDIR),$(notdir $(wildcard $(dir)/*.s)))
 OBJS       = $(CSOURCES:%.c=$(OBJDIR)/%.o) $(ASMSOURCES:%.s=$(OBJDIR)/%.o)
 
-all: prepare $(BINS)
+all: 
+	make default_sfx
+	make prepare $(BINS)
+
+default_sfx:
+	python hammer2cbt.py --fxammo 9 --fxmono --fxnamelist sfxnames.txt hammered.sav 0 huge/sfx
 
 compile.bat: Makefile
 	@echo "REM Automatically generated from Makefile" > compile.bat
@@ -46,6 +52,10 @@ $(OBJDIR)/%.o:	$(RESDIR)/%.c
 
 # Compile .c files in "huge/" to .o object files
 $(OBJDIR)/%.o:	$(BGMDIR)/%.c
+	$(LCC) $(LCCFLAGS) -c -o $@ $<	
+
+# Compile .c files in "huge/" to .o object files
+$(OBJDIR)/%.o:	$(SFXDIR)/%.c
 	$(LCC) $(LCCFLAGS) -c -o $@ $<	
 
 # Compile .s assembly files in "src/" to .o object files

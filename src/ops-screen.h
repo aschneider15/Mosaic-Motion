@@ -64,6 +64,8 @@ void SetDialogTiles(void);
 */
 void SetText(uint8_t phrase[36]);
 
+void SetTextFormatted(const uint8_t* format, uint16_t value);
+
 /* Sets the label or "speaker" tiles in the window layer to the (maximum) seventeen characters which are passed. It terminates upon encountering NULL, upon which the 'label end' tile will be drawn. If no label is desired, pass a single forward slash ("/").
     \param label Up to seventeen characters to be placed starting on the second tile of the first row of the window layer.
 */
@@ -72,12 +74,18 @@ void SetLabel(uint8_t label[17]);
 /* Converts the letter into a writable tile corresponding to the general tileset.
     \param let The letter which is to be translated.
  */
-uint8_t ConvertLetterToTile(char let);
+uint8_t ConvertLetterToTile(uint8_t let);
+
+/* Converts an unsigned 16-bit integer into a string capable of being displayed using the DisplayDialogBox() function.
+    \param num Number to be converted into a string.
+ */
+uint8_t * ConvertIntToString(uint16_t num);
 
 /* Uses previously defined functions to create a dialogue box to display to the screen. 
     \param phrase Eighteen characters for the first line, followed immediately by the eighteen characters of the second line. Any greater number of characters will result in truncated text.
-    \param label Up to seventeen characters to be placed starting on the second tile of the first row of the window layer.
  */
-void DisplayDialogBox(uint8_t phrase[36], uint8_t label[17]);
+void DisplayDialogBox(uint8_t phrase[36]);
+
+void DisplayDialogBoxNumber(uint8_t phrase[36], uint16_t number);
 
 #endif

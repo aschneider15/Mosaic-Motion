@@ -5,11 +5,29 @@
 #include <stdint.h>
 #include <rand.h>
 
+#include "../huge/hUGEDriver.h"
+#include "../huge/cbtfx.h"
+
+#include "../huge/sfxbounce.h"
+#include "../huge/sfxbump.h"
+#include "../huge/sfxconfirm.h"
+#include "../huge/sfxgo.h"
+#include "../huge/sfxnope.h"
+#include "../huge/sfxready.h"
+#include "../huge/sfxready.h"
+#include "../huge/sfxswipe1.h"
+#include "../huge/sfxswipe2.h"
+#include "../huge/sfxtick.h"
+
 /* Enables a soft reset input (A + B + Start + Select).
     @param input The current player's input read from a call to joypad().
     @returns 1 if selection is entered by pressing A, or -1 if phase is cancelled by pressing B.
  */
 inline void SoftReset(uint8_t input);
+
+/* A function to be called during vblank interrupt. Advances the music and sfx drivers: hUGE and cbtfx
+ */
+void UpdateSoundDrivers(void);
 
 /* Allows for background data from a banked file to be loaded into another banked file.
     @param first_tile Index of the first tile to write.

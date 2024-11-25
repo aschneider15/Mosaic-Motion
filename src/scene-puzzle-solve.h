@@ -12,11 +12,12 @@
 #include "../res/tiles_general.h"
 #include "../res/tiles_gonefishing.h"
 
-
+// *
 #define BOARD_DIMENSION 12
 #define BOARD_DIMENSION_PX 96
 
 // The non-constant data in which the puzzle's current arrangement is represented.
+// *
 static uint8_t puzzle_map[144] =
 {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -34,12 +35,13 @@ static uint8_t puzzle_map[144] =
 };
 
 // The memory address of the base tiles of the puzzle to be drawn.
+// *
 static uint8_t * base_puzzle;
-
+// *
 static uint8_t cur_arrange[36]; // Current arrangment of tiles in the puzzle
-
+// *
 static uint8_t game_won; // Check that confirms that the game is won. Is set using the function CheckWinCondition.
-
+// *
 static uint8_t piece_size; // The size of a single mosaic metatile in hardware tiles. Will be either 4 (easy), 3 (medium) or 2 (hard).
 static uint8_t board_size; // The size of one dimension of the entire board in mosaic metatiles. Will be either 3 (easy), 4 (medium) or 6 (hard).
 static uint8_t total_board_size; // The size of the board in both x and y dimensions. Assigned to be board_size * board_size.
@@ -66,14 +68,18 @@ void PartitionTiles(uint8_t difficulty);
  */
 inline uint8_t GetPuzzleIndexFromBaseTile(uint8_t base_tile);
 
+/* 
+ */
 void SetCurrentPuzzleData(void);
 
+/* 
+ */
 void PopulateSpriteData(uint8_t mosaic_tile_index);
 
 /* Moves a tile adjacent to the "blank space" into the blank space. Movement is opposite of player movement (i.e. J_UP will result in the tile moving down) to give the illusion of the "blank space" moving. If a tile cannot be moved in a given direction, then the operation will fail.
     @param input Player input as measured through joypad().
  */
-void MoveMetaTile(uint8_t input);
+void StandardModeMovement(uint8_t input);
 
 /* Calculatest the number of inversions that occurr in the current puzzle arrangment. An inversion occurs whenever a higher number preceeds a lower number in the arrangment (eg. '8 2 4' would yield two inversions, since 8 > 2 and 8 > 4 ). */
 uint16_t CalculateInversions(void);
@@ -88,7 +94,11 @@ void RandomizeTiles(void);
  */
 inline void CheckWinCondition(void);
 
-/* The player's performance is graded based on the number of moves in relation to the time taken to complete the puzzle. 
+/* Calculates the player's score for the "Strategist" game style. The player's performance is graded based on the number of moves in relation to the time taken to complete the puzzle. 
+    - Time Bonus = Max Bonus - ((Elapsed Time / Max Time) * Max Bonus) --- This means it will be impossible to get a time bonus after a certain amount of time.
+    - Move Penalty = Excess Moves * Penalty Per Move
+    - Final Score Calculation = Base Score + Time Bonus - Move Penalty
+    - Note: I do have to make sure it doesn't underflow and give the player a really high score! Maybe limit move penalty to a certain threshold?
  */
 uint16_t CalculateScore(void);
 

@@ -1,7 +1,7 @@
 #include <gb/gb.h>
 #include <stdint.h>
 #include <rand.h>
-#include "../huge/hUGEDriver.h"
+#include "./ops-vital.h"
 #include "./scene-title.h"
 #include "./scene-selection.h"
 #include "./scene-puzzle-solve.h"
@@ -15,7 +15,7 @@ void main(void)
     enable_interrupts();
 
     // Cause song to advance at every vblank interrupt
-    add_VBL(hUGE_dosound);
+    add_VBL(UpdateSoundDrivers);
 
     uint8_t difficulty;
     // extern Stack SceneStack;

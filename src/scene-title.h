@@ -4,9 +4,8 @@
 #include <gb/gb.h>
 #include <stdint.h>
 #include <gb/sgb.h>
-#include "../huge/hUGEDriver.h"
 
-#include "ops-vital.h"
+#include "./ops-vital.h"
 #include "./ops-screen.h"
 #include "../res/uimap_dialogbox.h"
 #include "../res/tiles_general.h"

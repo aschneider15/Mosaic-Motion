@@ -8,6 +8,12 @@ inline void SoftReset(uint8_t input)
     }
 }
 
+void UpdateSoundDrivers(void)
+{
+    hUGE_dosound();
+    CBTFX_update();
+}
+
 inline void SetBKGBankedData(uint8_t first_tile, uint8_t nb_tiles, const uint8_t *data, uint8_t bank) 
 {
     uint8_t save = CURRENT_BANK;

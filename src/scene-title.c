@@ -29,17 +29,14 @@ uint8_t TitleMainLoop(void) BANKED
 
     uint8_t sprite_frame = 0x49;
 
-    // #define SFX_CH_RETRIGGER  0b11000000
-    // #define SFX_CH_ENABLE     0b10000000
-    // enable sound
+
     NR52_REG = 0b10000000; // enable all sound
     NR51_REG = 0xFF; // enable all channels
     NR50_REG = 0x77; // turn on stereo speakers
 
     // External song declaration
     extern const hUGESong_t bgm_title;
-
-
+    
     TitleInit();
 
     uint8_t cursor_x = 48;
@@ -63,6 +60,7 @@ uint8_t TitleMainLoop(void) BANKED
 
         if ((input & J_UP) && difficulty > 0)
         {
+            CBTFX_PLAY_tick;
             cursor_y -= 8;
             move_sprite(0, cursor_x, cursor_y);
             difficulty--;
@@ -70,12 +68,12 @@ uint8_t TitleMainLoop(void) BANKED
         }
         else if ((input & J_DOWN) && difficulty < 2)
         {
+            CBTFX_PLAY_tick;
             cursor_y += 8;
             move_sprite(0, cursor_x, cursor_y);
             difficulty++;
             WaitNewInput(input);
         }
-
         if((g_framecounter % 4) == 0)
         {
             set_sprite_tile(0, sprite_frame);
@@ -89,6 +87,10 @@ uint8_t TitleMainLoop(void) BANKED
         // Done processing, yield CPU and wait for start of next frame
         IncrementFrame();
     }
+
+    CBTFX_PLAY_confirm;
+
+    PerformantDelay(15);
 
     NR52_REG = 0x00;  // Disable all sound
     NR51_REG = 0x00;  // Disable all channels

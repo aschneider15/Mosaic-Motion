@@ -128,37 +128,115 @@ void SetDialogTiles(void)
 
 void SetText(uint8_t phrase[36])
 {
-    uint8_t i;
-    for (i = 0; i < 36; i++)
+    uint8_t x = 1; // X position in the window
+    uint8_t y = 1; // Y position in the window
+
+    for (uint8_t i = 0; i < 36; i++)
     {
-        if (i < 18)
+        if(phrase[i] == '\0')
         {
-            // terminator character detected - move to the next line
-            if (phrase[i] == '/')
+            break; // Stop if null terminator is encountered
+        }
+
+        // Handle newline character by moving to the next line
+        if (phrase[i] == '\n')
+        {
+            if (y == 1)
             {
-                i = 17;
+                y = 3; // Move to the second line in the window
+                x = 1; // Reset X position
             }
             else
             {
-                set_win_tile_xy(i + 1, 1, ConvertLetterToTile(phrase[i]));
+                break; // If already on the second line, stop rendering
             }
         }
         else
         {
-            // terminator character detected - shortcut to end of dialogbox
-            if (phrase[i] == '/')
+            set_win_tile_xy(x, y, ConvertLetterToTile(phrase[i]));
+            CBTFX_PLAY_tick;
+            x++;
+        }
+
+        // Move to the next line if the end of the current line is reached
+        if (x > 18)
+        {
+            if (y == 1)
             {
-                i = 35;
+                y = 3; // Move to the second line in the window
+                x = 1; // Reset X position
             }
             else
             {
-                set_win_tile_xy(i - 17, 3, ConvertLetterToTile(phrase[i]));
+                break; // If already on the second line, stop rendering
             }
         }
-        IncrementFrame();
+
+        PerformantDelay(2);
     }
     return;
 }
+
+
+// Function to convert an integer to a string
+void itoa(uint16_t num, uint8_t* str, uint8_t base) {
+    int i = 0;
+
+    // Handle 0 explicitly
+    if (num == 0) {
+        str[i++] = '0';
+        str[i] = '\0';
+        return;
+    }
+
+    // Process individual digits
+    while (num != 0) {
+        int rem = num % base;
+        str[i++] = (rem > 9) ? (rem - 10) + 'a' : rem + '0';
+        num = num / base;
+    }
+
+    str[i] = '\0'; // Null-terminate the string
+
+    // Reverse the string
+    for (int j = 0; j < i / 2; j++) {
+        char temp = str[j];
+        str[j] = str[i - j - 1];
+        str[i - j - 1] = temp;
+    }
+}
+
+// Modified SetText function to handle formatted strings
+void SetTextFormatted(const uint8_t* format, uint16_t value) {
+    char buffer[36];
+    char numStr[12]; // Buffer for the integer converted to string
+
+    itoa(value, numStr, 10); // Convert the integer to string
+
+    // Replace %d with the number string
+    int bufIdx = 0, fmtIdx = 0;
+    while (format[fmtIdx] != '\0' && bufIdx < sizeof(buffer) - 1) {
+        if (format[fmtIdx] == '%' && format[fmtIdx + 1] == 'd') {
+            for (int i = 0; numStr[i] != '\0' && bufIdx < sizeof(buffer) - 1; i++) {
+                buffer[bufIdx++] = numStr[i];
+            }
+            fmtIdx += 2; // Skip over %d
+        } else {
+            buffer[bufIdx++] = format[fmtIdx++];
+        }
+    }
+    buffer[bufIdx] = '\0'; // Null-terminate the string
+
+    SetText((uint8_t*)buffer);
+}
+/* 
+// Usage example
+void DisplayNumberExample() {
+    int number = 12345;
+    SetTextFormatted("Number: %d", number); // Display "Number: 12345"
+} 
+*/
+
 
 void SetLabel(uint8_t label[17])
 {
@@ -192,9 +270,12 @@ void SetLabel(uint8_t label[17])
     return;
 }
 
-uint8_t ConvertLetterToTile(char let)
+uint8_t ConvertLetterToTile(uint8_t let)
 {
-    uint8_t out = 0x2F;
+    // uint8_t out = 0x2F;
+
+    uint8_t out = let;
+
 
     if (let >= 'A' && let <= 'Z')
     {
@@ -252,12 +333,11 @@ uint8_t ConvertLetterToTile(char let)
     return out;
 }
 
-void DisplayDialogBox(uint8_t phrase[36], uint8_t label[17])
+void DisplayDialogBox(uint8_t phrase[36])
 {
     move_win(7, 104);
     uint8_t input = 0x00;
     SetDialogTiles();
-    SetLabel(label);
     SHOW_WIN;
     SetText(phrase);
     while (!(input & J_A || input & J_B))
@@ -265,13 +345,40 @@ void DisplayDialogBox(uint8_t phrase[36], uint8_t label[17])
         input = joypad();
         if (g_framecounter % 10 == 0)
         {
-            set_win_tile_xy(0x12, 0x04, 0x2D);
+            set_win_tile_xy(0x13, 0x04, 0x2D);
         }
         if (g_framecounter % 10 == 5)
         {
-            set_win_tile_xy(0x12, 0x04, 0x46);
+            set_win_tile_xy(0x13, 0x04, 0x47);
         }
         SoftReset(input);
         IncrementFrame();
     }
+    CBTFX_PLAY_confirm;
+    PerformantDelay(6);
+}
+
+void DisplayDialogBoxNumber(uint8_t phrase[36], uint16_t number)
+{
+    move_win(7, 104);
+    uint8_t input = 0x00;
+    SetDialogTiles();
+    SHOW_WIN;
+    SetTextFormatted(phrase, number);
+    while (!(input & J_A || input & J_B))
+    {
+        input = joypad();
+        if (g_framecounter % 10 == 0)
+        {
+            set_win_tile_xy(0x13, 0x04, 0x2D);
+        }
+        if (g_framecounter % 10 == 5)
+        {
+            set_win_tile_xy(0x13, 0x04, 0x47);
+        }
+        SoftReset(input);
+        IncrementFrame();
+    }
+    CBTFX_PLAY_confirm;
+    PerformantDelay(6);
 }

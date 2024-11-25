@@ -16,7 +16,7 @@ void SelectionInit(void)
 
     // Create the window layer to obscure scene transitions
     fill_win_rect(0, 0, 31, 31, 0xAF);
-    set_win_based_tiles(0, 0, 20, 4, uimap_select_curtain_map, 0x3A);
+    set_win_based_tiles(0, 0, 20, 4, uimap_select_curtain_map, 0x3B);
 
     move_win(7, 112);
 
@@ -34,6 +34,7 @@ void SelectionInit(void)
     hUGE_init(&bgm_selection);
 
     NR52_REG = 0b10000000; // enable all sound
+    NR51_REG = 0xFF;       // enable all channels
     NR50_REG = 0x77;       // turn on stereo speakers
 
     return;
@@ -50,8 +51,6 @@ void DifficultySelection(void)
     uint8_t cur_selection = 0;
     uint8_t input = 0;
 
-    NR51_REG = 0b00010001; // enable duty 1 channel sound
-
     /* Loop forever... at least until the break statments. */
     while (1)
     {
@@ -64,18 +63,21 @@ void DifficultySelection(void)
         {
             cur_selection--;
             cursor_y -= 8;
+            CBTFX_PLAY_tick;
         }
 
         if (input & J_DOWN && cur_selection < 2)
         {
             cur_selection++;
             cursor_y += 8;
+            CBTFX_PLAY_tick;
         }
 
         if (input & J_A)
         {
             // update settings to account for current selection
             settings = settings | cur_selection;
+            CBTFX_PLAY_confirm;
             phase = 2;
             return;
         }
@@ -83,6 +85,7 @@ void DifficultySelection(void)
         if (input & J_B)
         {
             phase = 0;
+            CBTFX_PLAY_confirm;
             return;
         }
 
@@ -103,8 +106,6 @@ void StyleSelection(void)
     uint8_t cur_selection = 0;
     uint8_t input = 0;
 
-    NR51_REG = 0b10011001; // enable duty 1 and noise channel sound
-
     /* Loop forever... at least until the break statments. */
     while (1)
     {
@@ -117,12 +118,14 @@ void StyleSelection(void)
         {
             cur_selection--;
             cursor_y -= 8;
+            CBTFX_PLAY_tick;
         }
 
         if (input & J_DOWN && cur_selection < 1)
         {
             cur_selection++;
             cursor_y += 8;
+            CBTFX_PLAY_tick;
         }
 
         if (input & J_A)
@@ -130,6 +133,7 @@ void StyleSelection(void)
             // left-shift by 1, then update settings to account for current selection
             settings << 1;
             settings = settings | cur_selection;
+            CBTFX_PLAY_confirm;
             phase = 3;
             return;
         }
@@ -137,6 +141,7 @@ void StyleSelection(void)
         if (input & J_B)
         {
             phase = 1;
+            CBTFX_PLAY_confirm;
             return;
         }
 
@@ -160,8 +165,6 @@ void ModeSelection(void)
     move_sprite(0, cursor_x, cursor_y);
     SHOW_SPRITES;
 
-    NR51_REG = 0b10111011; // enable duty 1, duty 2 and noise channel sound
-
     /* Loop forever... at least until the break statments. */
     while (1)
     {
@@ -174,12 +177,14 @@ void ModeSelection(void)
         {
             cur_selection--;
             cursor_y -= 8;
+            CBTFX_PLAY_tick;
         }
 
         if (input & J_DOWN && cur_selection < 2)
         {
             cur_selection++;
             cursor_y += 8;
+            CBTFX_PLAY_tick;
         }
 
         if (input & J_A)
@@ -189,6 +194,19 @@ void ModeSelection(void)
             settings = settings | cur_selection;
             phase = 4;
 
+            if (cur_selection > 0)
+            {
+                CBTFX_PLAY_nope;
+                PerformantDelay(16);
+                DisplayDialogBox(incomplete);
+                move_win(7, 112);
+                fill_win_rect(0, 0, 31, 31, 0xAF);
+                set_win_based_tiles(0, 0, 20, 4, uimap_select_curtain_map, 0x3B);
+                phase = 3;
+                return;
+            }
+
+            CBTFX_PLAY_confirm;
             // Scroll the background over to the music pane
             move_sprite(0, 0, 0);
             for (uint8_t i = 0; i < 24; i++)
@@ -202,6 +220,7 @@ void ModeSelection(void)
         if (input & J_B)
         {
             phase = 2;
+            CBTFX_PLAY_confirm;
             return;
         }
 
@@ -228,8 +247,6 @@ void MusicSelection(void)
 
     SHOW_SPRITES;
 
-    NR51_REG = 0b11111111; // enable all sound channels
-
     /* Loop forever... at least until the break statments. */
     while (1)
     {
@@ -242,12 +259,14 @@ void MusicSelection(void)
         {
             cur_selection--;
             cursor_y -= 8;
+            CBTFX_PLAY_tick;
         }
 
         if (input & J_DOWN && cur_selection < 3)
         {
             cur_selection++;
             cursor_y += 8;
+            CBTFX_PLAY_tick;
         }
 
         if (input & J_A)
@@ -255,6 +274,7 @@ void MusicSelection(void)
             // left-shift by two, then update settings to account for current selection
             settings << 2;
             settings = settings | cur_selection;
+            CBTFX_PLAY_confirm;
             phase = 5;
 
             WindowClose();
@@ -269,6 +289,7 @@ void MusicSelection(void)
         if (input & J_B)
         {
             phase = 3;
+            CBTFX_PLAY_confirm;
             // Scroll the background over to the first pane
             HIDE_SPRITES;
             for (uint8_t i = 0; i < 24; i++)
@@ -297,8 +318,6 @@ void PuzzleSelection(void)
     uint8_t cur_selection = 0;
     uint8_t input = 0;
 
-    NR51_REG = 0b11111111; // enable all sound channels
-
     SHOW_SPRITES;
 
     /* Loop forever... at least until the break statments. */
@@ -312,24 +331,28 @@ void PuzzleSelection(void)
         {
             cur_selection -= 4;
             cursor_y--;
+            CBTFX_PLAY_tick;
         }
 
         if (input & J_DOWN && cursor_y < 28)
         {
             cur_selection += 4;
             cursor_y++;
+            CBTFX_PLAY_tick;
         }
 
         if (input & J_RIGHT && cursor_x < 18)
         {
             cur_selection++;
             cursor_x++;
+            CBTFX_PLAY_tick;
         }
 
         if (input & J_RIGHT && cursor_x > 15)
         {
             cur_selection--;
             cursor_x--;
+            CBTFX_PLAY_tick;
         }
 
         if (input & J_A)
@@ -337,6 +360,7 @@ void PuzzleSelection(void)
             // left-shift by two, then update settings to account for current selection
             settings << 2;
             settings = settings | cur_selection;
+            CBTFX_PLAY_confirm;
             phase = 6;
 
             return;
@@ -345,6 +369,7 @@ void PuzzleSelection(void)
         if (input & J_B)
         {
             phase = 4;
+            CBTFX_PLAY_confirm;
 
             WindowClose();
             move_bkg(96, 0);
@@ -367,6 +392,7 @@ void PuzzleSelection(void)
 void WindowOpen(void)
 {
     SHOW_WIN;
+    CBTFX_PLAY_bounce;
     for (uint8_t i = 14; i > 0; i--)
     {
         move_win(7, scroll_positions[i]);
@@ -382,7 +408,7 @@ void WindowOpen(void)
 void WindowClose(void)
 {
     HIDE_SPRITES;
-
+    CBTFX_PLAY_bounce;
     for (uint8_t i = 0; i < 15; i++)
     {
         move_win(7, scroll_positions[i]);
