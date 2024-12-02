@@ -1,12 +1,21 @@
-#include "standard-mode-scene.h"
+#include "scene-puzzle-solve.h"
+
+
 
 void GetPuzzle(uint8_t rand)
 {
     HIDE_SPRITES;
+
+    uint8_t previous_bank = _current_bank;
+
+    SWITCH_ROM_MBC5( BANK(tiles_gonefishing) );
+
     set_bkg_data(tiles_gonefishing_TILE_ORIGIN, tiles_gonefishing_TILE_COUNT, tiles_gonefishing_tiles);
     set_bkg_tiles(0, 0, bkg_md_std_WIDTH >> 3, bkg_md_std_HEIGHT >> 3, bkg_md_std_map);
 
     base_puzzle = tiles_gonefishing_map;
+
+    SWITCH_ROM(previous_bank);
 
     return;
 }
@@ -98,6 +107,7 @@ void SetCurrentPuzzleData(void)
     return;
 }
 
+
 void PopulateSpriteData(uint8_t mosaic_tile_index)
 {
     uint8_t i = 0;
@@ -115,11 +125,12 @@ void PopulateSpriteData(uint8_t mosaic_tile_index)
     return;
 }
 
-void MoveMetaTile(uint8_t input)
+
+void StandardModeMovement(uint8_t input)
 {
     uint8_t temp = 0x00;
     uint8_t adjacent_tile = 0x00;
-    uint8_t old_blank = (blank_pos_x + (blank_pos_y)*board_size);
+    uint8_t old_blank = (blank_pos_x + (blank_pos_y * board_size));
 
     if (input & J_UP)
     {
@@ -133,19 +144,25 @@ void MoveMetaTile(uint8_t input)
             cur_arrange[old_blank] = cur_arrange[adjacent_tile];
             cur_arrange[adjacent_tile] = temp;
 
-            //set the background tiles so that blank becomes adjacent tile and adjacent tile becomes blank
+            // set the background tiles so that blank becomes adjacent tile and adjacent tile becomes blank
             set_bkg_tiles(4 + (blank_pos_x * piece_size), 1 + (blank_pos_y * piece_size), piece_size, piece_size, cur_sprite_data);
-            for(uint8_t i = 0; i < total_piece_size; i++)
+            for (uint8_t i = 0; i < total_piece_size; i++)
             {
                 cur_sprite_data[i] = 0x4F;
             }
-            set_bkg_tiles(4 + (blank_pos_x * piece_size), 1 + ((blank_pos_y - 1)*piece_size), piece_size, piece_size, cur_sprite_data);
+            set_bkg_tiles(4 + (blank_pos_x * piece_size), 1 + ((blank_pos_y - 1) * piece_size), piece_size, piece_size, cur_sprite_data);
 
+            if (g_framecounter % 2 == 1) CBTFX_PLAY_swipe1;
+            else CBTFX_PLAY_swipe2;
+            
             blank_pos_y--;
             operations++;
-            PerformantDelay(3);
+            WaitNewInput(input);
             CheckWinCondition();
+            return;
         }
+        CBTFX_PLAY_bump;
+        ShakeScreen(1, 1, 1, 6);
         return;
     }
     else if (input & J_DOWN)
@@ -159,19 +176,25 @@ void MoveMetaTile(uint8_t input)
             cur_arrange[old_blank] = cur_arrange[adjacent_tile];
             cur_arrange[adjacent_tile] = temp;
 
-            //set the background tiles so that blank becomes adjacent tile and adjacent tile becomes blank
+            // set the background tiles so that blank becomes adjacent tile and adjacent tile becomes blank
             set_bkg_tiles(4 + (blank_pos_x * piece_size), 1 + (blank_pos_y * piece_size), piece_size, piece_size, cur_sprite_data);
-            for(uint8_t i = 0; i < total_piece_size; i++)
+            for (uint8_t i = 0; i < total_piece_size; i++)
             {
                 cur_sprite_data[i] = 0x4F;
             }
-            set_bkg_tiles(4 + (blank_pos_x * piece_size), 1 + ((blank_pos_y + 1)*piece_size), piece_size, piece_size, cur_sprite_data);
+            set_bkg_tiles(4 + (blank_pos_x * piece_size), 1 + ((blank_pos_y + 1) * piece_size), piece_size, piece_size, cur_sprite_data);
+            
+            if (g_framecounter % 2 == 1) CBTFX_PLAY_swipe1;
+            else CBTFX_PLAY_swipe2;
 
             blank_pos_y++;
             operations++;
-            PerformantDelay(3);
+            WaitNewInput(input);
             CheckWinCondition();
+            return;
         }
+        CBTFX_PLAY_bump;
+        ShakeScreen(1, 1, 1, 6);
         return;
     }
     else if (input & J_LEFT)
@@ -185,19 +208,25 @@ void MoveMetaTile(uint8_t input)
             cur_arrange[old_blank] = cur_arrange[adjacent_tile];
             cur_arrange[adjacent_tile] = temp;
 
-            //set the background tiles so that blank becomes adjacent tile and adjacent tile becomes blank
+            // set the background tiles so that blank becomes adjacent tile and adjacent tile becomes blank
             set_bkg_tiles(4 + (blank_pos_x * piece_size), 1 + (blank_pos_y * piece_size), piece_size, piece_size, cur_sprite_data);
-            for(uint8_t i = 0; i < total_piece_size; i++)
+            for (uint8_t i = 0; i < total_piece_size; i++)
             {
                 cur_sprite_data[i] = 0x4F;
             }
             set_bkg_tiles(4 + ((blank_pos_x - 1) * piece_size), 1 + (blank_pos_y * piece_size), piece_size, piece_size, cur_sprite_data);
 
+            if (g_framecounter % 2 == 1) CBTFX_PLAY_swipe1;
+            else CBTFX_PLAY_swipe2;
+
             blank_pos_x--;
             operations++;
-            PerformantDelay(3);
+            WaitNewInput(input);
             CheckWinCondition();
+            return;
         }
+        CBTFX_PLAY_bump;
+        ShakeScreen(1, 1, 0, 6);
         return;
     }
     else if (input & J_RIGHT)
@@ -211,19 +240,25 @@ void MoveMetaTile(uint8_t input)
             cur_arrange[old_blank] = cur_arrange[adjacent_tile];
             cur_arrange[adjacent_tile] = temp;
 
-            //set the background tiles so that blank becomes adjacent tile and adjacent tile becomes blank
+            // set the background tiles so that blank becomes adjacent tile and adjacent tile becomes blank
             set_bkg_tiles(4 + (blank_pos_x * piece_size), 1 + (blank_pos_y * piece_size), piece_size, piece_size, cur_sprite_data);
-            for(uint8_t i = 0; i < total_piece_size; i++)
+            for (uint8_t i = 0; i < total_piece_size; i++)
             {
                 cur_sprite_data[i] = 0x4F;
             }
             set_bkg_tiles(4 + ((blank_pos_x + 1) * piece_size), 1 + (blank_pos_y * piece_size), piece_size, piece_size, cur_sprite_data);
 
+            if (g_framecounter % 2 == 1) CBTFX_PLAY_swipe1;
+            else CBTFX_PLAY_swipe2;
+
             blank_pos_x++;
             operations++;
-            PerformantDelay(3);
+            WaitNewInput(input);
             CheckWinCondition();
+            return;
         }
+        CBTFX_PLAY_bump;
+        ShakeScreen(1, 1, 0, 6);
         return;
     }
 
@@ -300,9 +335,86 @@ inline void CheckWinCondition(void)
     return;
 }
 
+void UpdateTimer(void)
+{
+    if (g_framecounter == 0)
+    {
+        secs++;
+    }
+    if (secs > 59)
+    {
+        mins++;
+        secs = 0;
+    }
+    if (mins > 99)
+    {
+        mins = 99;
+        secs = 59;
+    }
+    set_tile_xy(13, 16, (0x20 + g_framecounter % 10));
+    set_tile_xy(12, 16, (0x20 + g_framecounter / 10));
+    set_tile_xy(10, 16, (0x20 + secs % 10));
+    set_tile_xy(9, 16, (0x20 + secs / 10));
+    set_tile_xy(7, 16, (0x20 + mins % 10));
+    set_tile_xy(6, 16, (0x20 + mins / 10));
+}
+
+
+uint16_t CalculateScore(void)
+{
+    // Constants (scaled down to fit within 16-bit)
+    const uint16_t max_time_bonus = 50000; // Scaled max time bonus
+    const uint16_t base_score = 10000;     // Base score for completing puzzle
+    // The bigger the board size, the smaller the penalty.
+    const uint8_t move_penalty = 120 / board_size;       // Penalty per operation
+    const uint16_t max_time = 14400;       // Max time (4 minutes in frames)
+
+    // Calculate elapsed frames
+    uint16_t elapsed_frames = (mins * 3600) + (secs * 60) + g_framecounter;
+
+    // Calculate time bonus using intermediate 32-bit arithmetic to avoid overflow
+    uint32_t time_bonus = 0;
+    if (elapsed_frames < max_time) {
+        time_bonus = (uint32_t)max_time_bonus * (max_time - elapsed_frames) / max_time;
+    }
+    else
+    {
+        time_bonus = 0;
+    }
+
+    // Calculate the final score with base score and penalties
+    int32_t final_score = (int32_t)base_score + (int32_t)time_bonus;
+
+    // Subtract operation penalties
+    if (base_score > (move_penalty * operations)) {
+        final_score -= (int32_t)(operations * move_penalty);
+    }
+
+    // Clamp the score to fit within uint16_t range
+    // This was generated by GPT-4... this part is ridiculous.
+    // An unsigned int CAN'T be less than zero. It'll underflow.
+    /* 
+    if (final_score > 65535) {
+        final_score = 65535; // Cap at maximum 16-bit value
+    } else if (final_score < 0) {
+        final_score = 0; // Ensure no negative scores
+    }
+    */
+
+    return (uint16_t)final_score;
+}
+
+
+
+
+
 void StandardModeMainLoop(uint8_t difficulty)
 {
+    set_bkg_data(0, tiles_general_TILE_ORIGIN, tiles_general_tiles);
+    move_bkg(0, 0);
+
     game_won = 0;
+    operations = 0;
     secs = 0;
     mins = 0;
 
@@ -315,46 +427,32 @@ void StandardModeMainLoop(uint8_t difficulty)
     // SHOW_SPRITES;
     WhtFadeIn(4);
 
+    extern const hUGESong_t bgm_howtoplay;
+    hUGE_init(&bgm_howtoplay);
+
+    NR52_REG = 0b10000000; // enable all sound
+    NR51_REG = 0xFF;       // enable all channels
+    NR50_REG = 0x77;       // turn on stereo speakers
+
     uint8_t input = 0x00;
     uint8_t i = 0, j = 0;
     g_framecounter = 1;
+
+    // Create vblank interrupt to update the timer every frame. 
+    add_VBL(UpdateTimer);
 
     while (game_won == 0)
     {
         input = joypad();
 
-        if((input & J_A) && (input & J_B) && (input & J_START) && (input & J_SELECT))
-        {
-            reset();
-        }
+        SoftReset(input);
 
         if (!(input & 0x00))
         {
-            MoveMetaTile(input);
+            StandardModeMovement(input);
         }
 
-        if (g_framecounter == 0)
-        {
-            secs++;
-        }
-        if (secs > 59)
-        {
-            mins++;
-            secs = 0;
-        }
-        if (mins > 99)
-        {
-            mins = 99;
-            secs = 59;
-        }
-        set_tile_xy(13, 16, (0x20 + g_framecounter % 10));
-        set_tile_xy(12, 16, (0x20 + g_framecounter / 10));
-        set_tile_xy(10, 16, (0x20 + secs % 10));
-        set_tile_xy(9, 16, (0x20 + secs / 10));
-        set_tile_xy(7, 16, (0x20 + mins % 10));
-        set_tile_xy(6, 16, (0x20 + mins / 10));
-
-        // For debugging purposes, this was how you can display the numeric current arrangement to the screen.
+        // For debugging purposes, this is how you can display the numeric current arrangement to the screen.
         // for (i = 0; i < board_size; i++)
         // {
         //     for (j = 0; j < board_size; j++)
@@ -366,10 +464,20 @@ void StandardModeMainLoop(uint8_t difficulty)
         IncrementFrame();
     }
 
-    DisplayDialogBox("Congratulations!  You solved it!    ", "Aidan");
-    DisplayDialogBox("Thanks for playingMy alpha release  ", "Aidan");
-    DisplayDialogBox("And please look   forward to some   ", "Aidan");
-    DisplayDialogBox("more currently in the works! Bye!   ", "Aidan");
+    // Remove timer update interrupt
+    remove_VBL(UpdateTimer);
+
+    uint16_t final_score = CalculateScore();
+
+    DisplayDialogBox("Congratulations!  You solved it!\0");
+    DisplayDialogBoxNumber("Final Score:\n%d pts.\0", final_score);
+    DisplayDialogBox("Thanks for playingMy alpha release\0");
+    DisplayDialogBox("And please look\nforward to some\0");
+    DisplayDialogBox("more currently in the works! Bye!\0");
+    
+    NR52_REG = 0x00; // Disable all sound
+    NR51_REG = 0x00; // Disable all channels
+    NR50_REG = 0x00; // Mute both left and right speakers
 
     WhtFadeOut(4);
     HIDE_BKG;

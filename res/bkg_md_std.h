@@ -16,11 +16,10 @@
 #define bkg_md_std_COLORS_PER_PALETTE 4
 #define bkg_md_std_TOTAL_COLORS 4
 #define bkg_md_std_MAP_ATTRIBUTES 0
+extern const unsigned char bkg_md_std_map[360];
+#define bkg_md_std_map_attributes bkg_md_std_map
 
 BANKREF_EXTERN(bkg_md_std)
 
-
-extern const unsigned char bkg_md_std_map[360];
-#define bkg_md_std_map_attributes bkg_md_std_map
 
 #endif

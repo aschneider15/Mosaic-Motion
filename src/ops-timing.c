@@ -1,4 +1,4 @@
-#include "timing-ops.h"
+#include "ops-timing.h"
 
 uint8_t g_framecounter = 0;
 
@@ -6,7 +6,7 @@ void PerformantDelay(uint8_t frames)
 {
     for (int i = 0; i < frames; i++)
     {
-        vsync();
+        IncrementFrame();
     }
 }
 

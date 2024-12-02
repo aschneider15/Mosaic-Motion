@@ -21,5 +21,4 @@ BANKREF_EXTERN(tiles_general)
 extern const palette_color_t tiles_general_palettes[4];
 extern const uint8_t tiles_general_tiles[1536];
 
-
 #endif

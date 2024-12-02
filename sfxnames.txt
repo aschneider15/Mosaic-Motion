@@ -1,0 +1,9 @@
+bump
+swipe1
+swipe2
+bounce
+confirm
+ready
+go
+nope
+tick

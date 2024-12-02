@@ -6,23 +6,21 @@
 #include <gbdk/platform.h>
 #include <gbdk/metasprites.h>
 
-#define bkg_title_TILE_ORIGIN 96
+#define bkg_title_TILE_ORIGIN 0
 #define bkg_title_TILE_W 8
 #define bkg_title_TILE_H 8
 #define bkg_title_WIDTH 160
 #define bkg_title_HEIGHT 144
-#define bkg_title_TILE_COUNT 55
-#define bkg_title_PALETTE_COUNT 2
+#define bkg_title_TILE_COUNT 68
+#define bkg_title_PALETTE_COUNT 1
 #define bkg_title_COLORS_PER_PALETTE 4
-#define bkg_title_TOTAL_COLORS 8
+#define bkg_title_TOTAL_COLORS 4
 #define bkg_title_MAP_ATTRIBUTES 0
+extern const unsigned char bkg_title_map[360];
+#define bkg_title_map_attributes bkg_title_map
 
 BANKREF_EXTERN(bkg_title)
 
-extern const palette_color_t bkg_title_palettes[4];
-extern const uint8_t bkg_title_tiles[880];
-
-extern const unsigned char bkg_title_map[360];
-#define bkg_title_map_attributes bkg_title_map
+extern const uint8_t bkg_title_tiles[1088];
 
 #endif

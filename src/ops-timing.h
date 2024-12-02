@@ -1,5 +1,5 @@
-#ifndef TIMING_OPS_H
-#define TIMING_OPS_H
+#ifndef OPS_TIMING_H
+#define OPS_TIMING_H
 
 #include <gb/gb.h>
 #include <stdint.h>

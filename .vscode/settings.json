@@ -12,6 +12,26 @@
         "metasprites.h": "c",
         "platform.h": "c",
         "standard-mode-scene.h": "c",
-        "tiles_gonefishing.h": "c"
+        "tiles_gonefishing.h": "c",
+        "gb.h": "c",
+        "hugedriver.h": "c",
+        "screen-ops.h": "c",
+        "sgb.h": "c",
+        "scene-standard-mode.h": "c",
+        "ops-vital.h": "c",
+        "scene-selection.h": "c",
+        "ops-screen.h": "c",
+        "ops-dialogbox.h": "c",
+        "bkg_md_std.h": "c",
+        "scene-title.h": "c",
+        "bkg_selection.h": "c",
+        "ops-timing.h": "c",
+        "border_default.h": "c",
+        "scene-puzzle-solve.h": "c",
+        "uimap_select-curtain.h": "c",
+        "logic-standard-mode.h": "c",
+        "cbtfx.h": "c",
+        "sfxtick.h": "c",
+        "sfxconfirm.h": "c"
     }
 }

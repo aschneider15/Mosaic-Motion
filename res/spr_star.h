@@ -19,12 +19,11 @@
 #define spr_star_PIVOT_Y 4
 #define spr_star_PIVOT_W 8
 #define spr_star_PIVOT_H 8
+extern const metasprite_t* const spr_star_metasprites[1];
 
 BANKREF_EXTERN(spr_star)
 
 extern const palette_color_t spr_star_palettes[4];
 extern const uint8_t spr_star_tiles[16];
-
-extern const metasprite_t* const spr_star_metasprites[1];
 
 #endif
