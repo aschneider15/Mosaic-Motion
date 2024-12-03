@@ -27,9 +27,6 @@ uint8_t TitleMainLoop(void) BANKED
     uint8_t difficulty = 0x00;
     uint8_t input = 0x00;
 
-    uint8_t sprite_frame = 0x49;
-
-
     NR52_REG = 0b10000000; // enable all sound
     NR51_REG = 0xFF; // enable all channels
     NR50_REG = 0x77; // turn on stereo speakers
@@ -39,14 +36,8 @@ uint8_t TitleMainLoop(void) BANKED
     
     TitleInit();
 
-    uint8_t cursor_x = 48;
-    uint8_t cursor_y = 80;
-
-    move_sprite(0, cursor_x, cursor_y);
-
 
     SHOW_BKG;
-    SHOW_SPRITES;
     WhtFadeIn(4);
 
     // Initialize the music
@@ -55,35 +46,6 @@ uint8_t TitleMainLoop(void) BANKED
     while (!(input == J_START))
     {
         input = joypad();
-
-        SoftReset(input);
-
-        if ((input & J_UP) && difficulty > 0)
-        {
-            CBTFX_PLAY_tick;
-            cursor_y -= 8;
-            move_sprite(0, cursor_x, cursor_y);
-            difficulty--;
-            WaitNewInput(input);
-        }
-        else if ((input & J_DOWN) && difficulty < 2)
-        {
-            CBTFX_PLAY_tick;
-            cursor_y += 8;
-            move_sprite(0, cursor_x, cursor_y);
-            difficulty++;
-            WaitNewInput(input);
-        }
-        if((g_framecounter % 4) == 0)
-        {
-            set_sprite_tile(0, sprite_frame);
-            sprite_frame++;
-        }
-        if(sprite_frame > 0x4B) 
-        {
-            sprite_frame = 0x49;
-        }
-
         // Done processing, yield CPU and wait for start of next frame
         IncrementFrame();
     }

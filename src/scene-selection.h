@@ -35,7 +35,7 @@ static uint16_t settings = 0b0000000000000000;
  */
 static uint8_t phase;
 
-static uint8_t incomplete[36] = "That feature isn'tDone yet, sorry!\0";
+static uint8_t incomplete[36] = "Sorry. the featureis not done yet.\0";
 
 // bounding box for allowed cursor movements:
 static uint8_t cursor_x_lower_bound = 0;

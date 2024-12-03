@@ -26,8 +26,8 @@ void main(void)
     while (1)
     {
         SWITCH_ROM(BANK(TitleMainLoop));
-        difficulty = TitleMainLoop();
-        SelectionMainLoop();
+        TitleMainLoop();
+        difficulty = SelectionMainLoop();
         StandardModeMainLoop(difficulty);
     }
 }

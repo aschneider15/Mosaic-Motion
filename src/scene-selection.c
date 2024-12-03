@@ -76,7 +76,8 @@ void DifficultySelection(void)
         if (input & J_A)
         {
             // update settings to account for current selection
-            settings = settings | cur_selection;
+            settings = cur_selection;
+            // settings = settings | cur_selection;
             CBTFX_PLAY_confirm;
             phase = 2;
             return;
@@ -131,10 +132,23 @@ void StyleSelection(void)
         if (input & J_A)
         {
             // left-shift by 1, then update settings to account for current selection
-            settings << 1;
-            settings = settings | cur_selection;
+            // settings << 1;
+            // settings = settings | cur_selection;
             CBTFX_PLAY_confirm;
             phase = 3;
+
+            if (cur_selection > 0)
+            {
+                CBTFX_PLAY_nope;
+                PerformantDelay(16);
+                DisplayDialogBox(incomplete);
+                move_win(7, 112);
+                fill_win_rect(0, 0, 31, 31, 0xAF);
+                set_win_based_tiles(0, 0, 20, 4, uimap_select_curtain_map, 0x3B);
+                phase = 2;
+                return;
+            }
+
             return;
         }
 
@@ -190,8 +204,8 @@ void ModeSelection(void)
         if (input & J_A)
         {
             // left-shift by two, then update settings to account for current selection
-            settings << 2;
-            settings = settings | cur_selection;
+            // settings << 2;
+            // settings = settings | cur_selection;
             phase = 4;
 
             if (cur_selection > 0)
@@ -272,10 +286,22 @@ void MusicSelection(void)
         if (input & J_A)
         {
             // left-shift by two, then update settings to account for current selection
-            settings << 2;
-            settings = settings | cur_selection;
+            // settings << 2;
+            // settings = settings | cur_selection;
             CBTFX_PLAY_confirm;
             phase = 5;
+
+            if (cur_selection > 0)
+            {
+                CBTFX_PLAY_nope;
+                PerformantDelay(16);
+                DisplayDialogBox(incomplete);
+                move_win(7, 112);
+                fill_win_rect(0, 0, 31, 31, 0xAF);
+                set_win_based_tiles(0, 0, 20, 4, uimap_select_curtain_map, 0x3B);
+                phase = 4;
+                return;
+            }
 
             WindowClose();
             move_bkg(0, 144);
@@ -310,6 +336,7 @@ void MusicSelection(void)
 void PuzzleSelection(void)
 {
     // prevent two subsequent A- or B-presses
+    
     waitpadup();
 
     cursor_x = 15;
@@ -320,7 +347,11 @@ void PuzzleSelection(void)
 
     SHOW_SPRITES;
 
+    DisplayDialogBox(incomplete);
+    phase = 6;
+    return;
     /* Loop forever... at least until the break statments. */
+/* 
     while (1)
     {
         input = joypad();
@@ -387,6 +418,7 @@ void PuzzleSelection(void)
         WaitNewInput(input);
         IncrementFrame();
     }
+     */
 }
 
 void WindowOpen(void)
