@@ -2,6 +2,14 @@
 
 ## Currently in development by Aidan Schneider (Absent Corner)
 
+### Demo Pictures:
+
+![Title Screen](demo_pics/demo1.bmp)
+![Selection Screen (1 of 2)](demo_pics/demo2.bmp)
+![Selection Screen (2 of 2)](demo_pics/demo3.bmp)
+![Puzzle Solving](demo_pics/demo4.bmp)
+![Puzzle Solved](demo_pics/demo5.bmp)
+
 ### Thanks for checking out my project!
 
 I'm planning on finishing this around the end of 2024... minimum viable product expected by September 1.
