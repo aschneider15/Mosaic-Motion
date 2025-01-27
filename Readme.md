@@ -18,12 +18,6 @@ For anyone wondering, my favorite part to work on so far has been the soundtrack
 
 ### Personal Notes:
 
-- Memory Banking:
-  - Game & Watch Gallery 1 Specs are probably pretty safe to go off of:
-    - Cart Type: MBC1 + RAM + Battery
-    - ROM Size: 256 KiB
-    - RAM size: 8 KiB
-
 ## Resources
 
 - [Game Boy Pan Docs](https://gbdev.io/pandocs/About.html)
