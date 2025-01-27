@@ -24,31 +24,6 @@ For anyone wondering, my favorite part to work on so far has been the soundtrack
     - ROM Size: 256 KiB
     - RAM size: 8 KiB
 
-## To Do List Draft
-
-### High Priority:
-
-| Task                                                           | Deadline | Done? |
-| -------------------------------------------------------------- | -------- | ----- |
-| Implement options menu                                         | 10/27    | n     |
-| Implement Time Attack game style                               | 10/27    | n     |
-| Figure out score calculation method for Strategiest game style | 10/27    | n     |
-| Implement image preview                                        | 10/27    | n     |
-| Implement basic metasprite functionality                       | 10/30    | n     |
-
-### Med Priority
-
-| Task                                        | Deadline (optional) |
-| ------------------------------------------- | ------------------- |
-| Design and implement basic splash screen    |                     |
-| Make a list of fonts used in graphic design |                     |
-
-### Low Priority
-
-| Task | Deadline (optional) |
-| ---- | ------------------- |
-|      |                     |
-
 ## Resources
 
 - [Game Boy Pan Docs](https://gbdev.io/pandocs/About.html)
