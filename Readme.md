@@ -1,6 +1,6 @@
 # Mosaic Motion ©️: "The Ultimate Revival Puzzle Game for Nintendo®️ Game Boy™️!"
 
-## Currently in development by Aidan Schneider (Absent Corner)
+## Currently in development by Aidan Schneider
 
 ### Demo Pictures:
 
