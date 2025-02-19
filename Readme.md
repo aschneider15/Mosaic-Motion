@@ -11,8 +11,7 @@
 ![Puzzle Solved](demo_pics/demo5.bmp)
 
 ### Thanks for checking out my project!
-
-I'm planning on finishing this around the end of 2024... minimum viable product expected by September 1.
+For information about the design process and what features I plan on including by the time this project is finished, please check out [my design document.](/Design%20Document.md)
 
 For anyone wondering, my favorite part to work on so far has been the soundtrack! I'll be uploading oscilloscope views of the whole thing once it's finished on the Absent Corner YouTube channel, so stay tuned for that!
 
