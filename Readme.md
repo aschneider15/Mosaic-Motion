@@ -11,6 +11,8 @@
 ![Puzzle Solved](demo_pics/demo5.bmp)
 
 ### Thanks for checking out my project!
+Feel free to [download the rom and try it yourself]((https://github.com/aschneider15/Mosaic-Motion/releases)) using the Game Boy emulator of your choice! 
+
 For information about the design process and what features I plan on including by the time this project is finished, please check out [my design document.](/Design%20Document.md)
 
 For anyone wondering, my favorite part to work on so far has been the soundtrack! I'll be uploading oscilloscope views of the whole thing once it's finished on the [Absent Corner YouTube channel](https://youtube.com/@absentcorner), so stay tuned for that!
