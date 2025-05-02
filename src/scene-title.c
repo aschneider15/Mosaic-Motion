@@ -27,6 +27,19 @@ uint8_t TitleMainLoop(void) BANKED
     uint8_t difficulty = 0x00;
     uint8_t input = 0x00;
 
+    switch (LoadSaveData())
+    {
+        default:
+            DisplayDialogBox("Save file loaded\nSuccessfully!");
+            break;
+        case -1:
+            DisplayDialogBox("There is no saved file.");
+            break;
+        case 1: 
+            DisplayDialogBox("Checksum conflict!\nThe save file is corrupt.");
+            break;
+    }
+        
     NR52_REG = 0b10000000; // enable all sound
     NR51_REG = 0xFF; // enable all channels
     NR50_REG = 0x77; // turn on stereo speakers

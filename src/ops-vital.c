@@ -1,8 +1,37 @@
 #include "ops-vital.h"
 
+uint8_t unlocked_puzzles = 0;
+
+uint16_t standard_mode_scores[30] =
+    {
+        0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0};
+
+uint16_t twist_mode_scores[30] =
+    {
+        0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0};
+
+uint16_t shift_mode_scores[30] =
+    {
+        0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0};
+
 inline void SoftReset(uint8_t input)
 {
-    if((input & J_A) && (input & J_B) && (input & J_SELECT) && (input & J_START))
+    if ((input & J_A) && (input & J_B) && (input & J_SELECT) && (input & J_START))
     {
         reset();
     }
@@ -14,7 +43,7 @@ void UpdateSoundDrivers(void)
     CBTFX_update();
 }
 
-inline void SetBKGBankedData(uint8_t first_tile, uint8_t nb_tiles, const uint8_t *data, uint8_t bank) 
+inline void SetBKGBankedData(uint8_t first_tile, uint8_t nb_tiles, const uint8_t *data, uint8_t bank)
 {
     uint8_t save = CURRENT_BANK;
     SWITCH_ROM(bank);
@@ -35,7 +64,7 @@ inline void WaitNewInput(uint8_t previous_input)
     // poll current input
     uint8_t current_input = joypad();
     // if current input is the same as the previous, do recursive call
-    if(current_input | previous_input != 0)
+    if (current_input | previous_input != 0)
     {
         set_sprite_tile(0, 0x49 + (g_framecounter % 4));
         IncrementFrame();
