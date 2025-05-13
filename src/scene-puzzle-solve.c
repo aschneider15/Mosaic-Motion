@@ -469,15 +469,8 @@ void StandardModeMainLoop(uint8_t difficulty)
 
     uint16_t final_score = CalculateScore();
 
-    if(final_score > standard_mode_scores[0])
-    {
-        standard_mode_scores[0] = final_score;
-        UpdateSavedData();
-    }
-
     DisplayDialogBox("Congratulations!  You solved it!\0");
     DisplayDialogBoxNumber("Final Score:\n%d pts.\0", final_score);
-    DisplayDialogBoxNumber("High Score: \n%d pts.\0", standard_mode_scores[0]);
     DisplayDialogBox("Thanks for playingMy alpha release\0");
     DisplayDialogBox("And please look\nforward to some\0");
     DisplayDialogBox("more currently in the works! Bye!\0");

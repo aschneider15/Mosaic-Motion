@@ -5,8 +5,6 @@
 #include <stdint.h>
 #include <rand.h>
 
-#include "saved-data.h"
-
 #include "../huge/hUGEDriver.h"
 #include "../huge/cbtfx.h"
 
@@ -20,9 +18,6 @@
 #include "../huge/sfxswipe1.h"
 #include "../huge/sfxswipe2.h"
 #include "../huge/sfxtick.h"
-
-/* Global variable used to control most animations and non-halting delays. */
-extern uint8_t g_framecounter;
 
 /* Enables a soft reset input (A + B + Start + Select).
     @param input The current player's input read from a call to joypad().
@@ -53,10 +48,22 @@ inline void SetBKGBankedData(uint8_t first_tile, uint8_t nb_tiles, const uint8_t
  */
 inline void SetTilemapBankedData(uint8_t x, uint8_t y, uint8_t w, uint8_t h, const uint8_t *tiles, uint8_t bank);
 
-/* Waits until the user has let go of a given input before processing a new one. This is done by calling itself recursively.
+/* Waits until the user has let go of a given input before processing a new one. This is done by calling itself recursively. 
    This function yields better battery life than waitpadup() because it doesn't eat up CPU cycles.
     @param previous_input The player's previous input.
  */
 inline void WaitNewInput(uint8_t previous_input);
+
+/* Global variable used to control most animations and non-halting delays. */
+extern uint8_t g_framecounter;
+
+/* Delays an action by waiting for vblank to occur for the given number of frames (originally written by GamingMonsters).
+    \param frames The number of frames meant to be delayed; 0 is the shortest delay, and 255 is the longest.
+*/
+void PerformantDelay(uint8_t frames);
+
+/* Call to increment the frame counter. Calling this function also calls vsync() in order to ensure smooth animation timing.*/
+inline void IncrementFrame(void);
+
 
 #endif

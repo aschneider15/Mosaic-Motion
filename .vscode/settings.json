@@ -32,7 +32,6 @@
         "logic-standard-mode.h": "c",
         "cbtfx.h": "c",
         "sfxtick.h": "c",
-        "sfxconfirm.h": "c",
-        "saved-data.h": "c"
+        "sfxconfirm.h": "c"
     }
 }

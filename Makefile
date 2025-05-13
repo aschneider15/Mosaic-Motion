@@ -46,10 +46,6 @@ compile.bat: Makefile
 $(OBJDIR)/%.o:	$(SRCDIR)/%.c
 	$(LCC) $(LCCFLAGS) -c -o $@ $<
 
-# Compile the saved-data.c file using the RAM bank flag
-$(OBJDIR)/saved-data.o:	$(SRCDIR)/saved-data.c
-	$(LCC) $(LCCFLAGS) -Wf-ba0 -c -o $@ $<
-
 # Compile .c files in "res/" to .o object files
 $(OBJDIR)/%.o:	$(RESDIR)/%.c
 	$(LCC) $(LCCFLAGS) -c -o $@ $<

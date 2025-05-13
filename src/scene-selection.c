@@ -20,9 +20,6 @@ void SelectionInit(void)
 
     move_win(7, 112);
 
-    cursor_x = 24;
-    cursor_y = 24;
-    
     move_sprite(0, cursor_x, cursor_y);
 
     SHOW_BKG;
@@ -339,7 +336,7 @@ void MusicSelection(void)
 void PuzzleSelection(void)
 {
     // prevent two subsequent A- or B-presses
-
+    
     waitpadup();
 
     cursor_x = 15;
@@ -354,74 +351,74 @@ void PuzzleSelection(void)
     phase = 6;
     return;
     /* Loop forever... at least until the break statments. */
-    /*
-        while (1)
+/* 
+    while (1)
+    {
+        input = joypad();
+
+        SoftReset(input);
+
+        if (input & J_UP && cursor_y > 27)
         {
-            input = joypad();
-
-            SoftReset(input);
-
-            if (input & J_UP && cursor_y > 27)
-            {
-                cur_selection -= 4;
-                cursor_y--;
-                CBTFX_PLAY_tick;
-            }
-
-            if (input & J_DOWN && cursor_y < 28)
-            {
-                cur_selection += 4;
-                cursor_y++;
-                CBTFX_PLAY_tick;
-            }
-
-            if (input & J_RIGHT && cursor_x < 18)
-            {
-                cur_selection++;
-                cursor_x++;
-                CBTFX_PLAY_tick;
-            }
-
-            if (input & J_RIGHT && cursor_x > 15)
-            {
-                cur_selection--;
-                cursor_x--;
-                CBTFX_PLAY_tick;
-            }
-
-            if (input & J_A)
-            {
-                // left-shift by two, then update settings to account for current selection
-                settings << 2;
-                settings = settings | cur_selection;
-                CBTFX_PLAY_confirm;
-                phase = 6;
-
-                return;
-            }
-
-            if (input & J_B)
-            {
-                phase = 4;
-                CBTFX_PLAY_confirm;
-
-                WindowClose();
-                move_bkg(96, 0);
-                move_sprite(0, 88, 32);
-                PerformantDelay(15);
-                WindowOpen();
-
-                return;
-            }
-
-            move_sprite(0, cursor_x, cursor_y);
-
-            // Not easy on the eyes
-            // set_bkg_data(0x4F, 1, tiles_general_tiles + 960 + (16 * (g_framecounter % 4)));
-            WaitNewInput(input);
-            IncrementFrame();
+            cur_selection -= 4;
+            cursor_y--;
+            CBTFX_PLAY_tick;
         }
-         */
+
+        if (input & J_DOWN && cursor_y < 28)
+        {
+            cur_selection += 4;
+            cursor_y++;
+            CBTFX_PLAY_tick;
+        }
+
+        if (input & J_RIGHT && cursor_x < 18)
+        {
+            cur_selection++;
+            cursor_x++;
+            CBTFX_PLAY_tick;
+        }
+
+        if (input & J_RIGHT && cursor_x > 15)
+        {
+            cur_selection--;
+            cursor_x--;
+            CBTFX_PLAY_tick;
+        }
+
+        if (input & J_A)
+        {
+            // left-shift by two, then update settings to account for current selection
+            settings << 2;
+            settings = settings | cur_selection;
+            CBTFX_PLAY_confirm;
+            phase = 6;
+
+            return;
+        }
+
+        if (input & J_B)
+        {
+            phase = 4;
+            CBTFX_PLAY_confirm;
+
+            WindowClose();
+            move_bkg(96, 0);
+            move_sprite(0, 88, 32);
+            PerformantDelay(15);
+            WindowOpen();
+
+            return;
+        }
+
+        move_sprite(0, cursor_x, cursor_y);
+
+        // Not easy on the eyes
+        // set_bkg_data(0x4F, 1, tiles_general_tiles + 960 + (16 * (g_framecounter % 4)));
+        WaitNewInput(input);
+        IncrementFrame();
+    }
+     */
 }
 
 void WindowOpen(void)
