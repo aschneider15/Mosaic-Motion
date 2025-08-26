@@ -19,15 +19,14 @@
 #include "../huge/sfxswipe2.h"
 #include "../huge/sfxtick.h"
 
+// Flag to check whether music is on
+static uint8_t hUGEMusicOn = FALSE;
+
 /* Enables a soft reset input (A + B + Start + Select).
     @param input The current player's input read from a call to joypad().
     @returns 1 if selection is entered by pressing A, or -1 if phase is cancelled by pressing B.
  */
 inline void SoftReset(uint8_t input);
-
-/* A function to be called during vblank interrupt. Advances the music and sfx drivers: hUGE and cbtfx
- */
-void UpdateSoundDrivers(void);
 
 /* Allows for background data from a banked file to be loaded into another banked file.
     @param first_tile Index of the first tile to write.
@@ -64,6 +63,14 @@ void PerformantDelay(uint8_t frames);
 
 /* Call to increment the frame counter. Calling this function also calls vsync() in order to ensure smooth animation timing.*/
 inline void IncrementFrame(void);
+
+/* Call to pause current music track */
+void hUGEPauseMusic(void);
+
+/* Call to resume the current music track */
+void hUGEResumeMusic(void);
+
+
 
 
 #endif

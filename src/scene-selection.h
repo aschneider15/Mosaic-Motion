@@ -35,7 +35,7 @@ static uint16_t settings = 0b0000000000000000;
  */
 static uint8_t phase;
 
-static uint8_t incomplete[36] = "Sorry. the featureis not done yet.\0";
+static const uint8_t incomplete[36] = "Sorry. the featureis not done yet.\0";
 
 // bounding box for allowed cursor movements:
 static uint8_t cursor_x_lower_bound = 0;
@@ -80,7 +80,7 @@ void WindowOpen(void);
 void WindowClose(void);
 
 /* Operates the main loop for the Selection scene */
-uint8_t SelectionMainLoop(void);
+uint16_t SelectionMainLoop(void);
 
 
 #endif

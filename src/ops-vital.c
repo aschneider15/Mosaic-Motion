@@ -2,19 +2,13 @@
 
 inline void SoftReset(uint8_t input)
 {
-    if((input & J_A) && (input & J_B) && (input & J_SELECT) && (input & J_START))
+    if ((input & J_A) && (input & J_B) && (input & J_SELECT) && (input & J_START))
     {
         reset();
     }
 }
 
-void UpdateSoundDrivers(void)
-{
-    hUGE_dosound();
-    CBTFX_update();
-}
-
-inline void SetBKGBankedData(uint8_t first_tile, uint8_t nb_tiles, const uint8_t *data, uint8_t bank) 
+inline void SetBKGBankedData(uint8_t first_tile, uint8_t nb_tiles, const uint8_t *data, uint8_t bank)
 {
     uint8_t save = CURRENT_BANK;
     SWITCH_ROM(bank);
@@ -35,12 +29,53 @@ inline void WaitNewInput(uint8_t previous_input)
     // poll current input
     uint8_t current_input = joypad();
     // if current input is the same as the previous, do recursive call
-    if(current_input | previous_input != 0)
+    if (current_input | previous_input != 0)
     {
         set_sprite_tile(0, 0x49 + (g_framecounter % 4));
         IncrementFrame();
         WaitNewInput(current_input);
     }
 
+    return;
+}
+
+void hUGEPauseMusic(void)
+{
+    if(!hUGEMusicOn) return;
+
+    hUGE_mute_channel(HT_CH1, HT_CH_MUTE);
+    hUGE_mute_channel(HT_CH2, HT_CH_MUTE);
+    hUGE_mute_channel(HT_CH3, HT_CH_MUTE);
+    hUGE_mute_channel(HT_CH4, HT_CH_MUTE);
+    __critical
+    {
+        // remove hUGE update intterupt
+        remove_VBL(hUGE_dosound);
+    }
+
+    hUGE_mute_channel(HT_CH1, HT_CH_PLAY);
+    hUGE_mute_channel(HT_CH2, HT_CH_PLAY);
+    hUGE_mute_channel(HT_CH3, HT_CH_PLAY);
+    hUGE_mute_channel(HT_CH4, HT_CH_PLAY);
+
+    hUGEMusicOn = FALSE;
+    return;
+}
+
+void hUGEResumeMusic(void)
+{
+    if(hUGEMusicOn) return;
+
+    __critical
+    {
+        // re-add hUGE update intterupt
+        add_VBL(hUGE_dosound);
+    }
+    hUGE_mute_channel(HT_CH1, HT_CH_PLAY);
+    hUGE_mute_channel(HT_CH2, HT_CH_PLAY);
+    hUGE_mute_channel(HT_CH3, HT_CH_PLAY);
+    hUGE_mute_channel(HT_CH4, HT_CH_PLAY);
+
+    hUGEMusicOn = TRUE;
     return;
 }

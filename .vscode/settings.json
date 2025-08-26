@@ -32,6 +32,7 @@
         "logic-standard-mode.h": "c",
         "cbtfx.h": "c",
         "sfxtick.h": "c",
-        "sfxconfirm.h": "c"
+        "sfxconfirm.h": "c",
+        "sfxswipe1.h": "c"
     }
 }

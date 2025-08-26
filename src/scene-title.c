@@ -33,16 +33,16 @@ uint8_t TitleMainLoop(void) BANKED
 
     // External song declaration
     extern const hUGESong_t bgm_title;
-    
-    TitleInit();
-
-
-    SHOW_BKG;
-    WhtFadeIn(4);
-
     // Initialize the music
     hUGE_init(&bgm_title);
-
+    
+    TitleInit();
+    
+    SHOW_BKG;
+    WhtFadeIn(4);
+    
+    hUGEResumeMusic();
+    
     while (!(input == J_START))
     {
         input = joypad();
@@ -54,9 +54,11 @@ uint8_t TitleMainLoop(void) BANKED
 
     PerformantDelay(15);
 
-    NR52_REG = 0x00;  // Disable all sound
-    NR51_REG = 0x00;  // Disable all channels
-    NR50_REG = 0x00;  // Mute both left and right speakers
+    hUGEPauseMusic();
+
+    // NR52_REG = 0x00;  // Disable all sound
+    // NR51_REG = 0x00;  // Disable all channels
+    // NR50_REG = 0x00;  // Mute both left and right speakers
 
 
     WhtFadeOut(4);

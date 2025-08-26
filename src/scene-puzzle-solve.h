@@ -104,6 +104,6 @@ uint16_t CalculateScore(void);
 
 /* Operates the main loop for the Standard Mode scene.
  */
-void StandardModeMainLoop(uint8_t difficulty);
+void StandardModeMainLoop(uint16_t settings);
 
 #endif

@@ -14,10 +14,10 @@ void main(void)
 
     enable_interrupts();
 
-    // Cause song to advance at every vblank interrupt
-    add_VBL(UpdateSoundDrivers);
+    // Cause sound driver to advance at every vblank interrupt
+    add_VBL(CBTFX_update);
 
-    uint8_t difficulty;
+    uint16_t settings;
     // extern Stack SceneStack;
     // initialize(&SceneStack);
 
@@ -27,7 +27,7 @@ void main(void)
     {
         SWITCH_ROM(BANK(TitleMainLoop));
         TitleMainLoop();
-        difficulty = SelectionMainLoop();
-        StandardModeMainLoop(difficulty);
+        settings = SelectionMainLoop();
+        StandardModeMainLoop(settings);
     }
 }

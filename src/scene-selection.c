@@ -33,9 +33,11 @@ void SelectionInit(void)
     // Initialize the music
     hUGE_init(&bgm_selection);
 
-    NR52_REG = 0b10000000; // enable all sound
-    NR51_REG = 0xFF;       // enable all channels
-    NR50_REG = 0x77;       // turn on stereo speakers
+    // NR52_REG = 0b10000000; // enable all sound
+    // NR51_REG = 0xFF;       // enable all channels
+    // NR50_REG = 0x77;       // turn on stereo speakers
+
+    hUGEResumeMusic();
 
     return;
 }
@@ -76,8 +78,8 @@ void DifficultySelection(void)
         if (input & J_A)
         {
             // update settings to account for current selection
-            settings = cur_selection;
-            // settings = settings | cur_selection;
+            // settings = cur_selection;
+            settings = (settings & 0b1111110011111111) | cur_selection << 8;
             CBTFX_PLAY_confirm;
             phase = 2;
             return;
@@ -85,8 +87,8 @@ void DifficultySelection(void)
 
         if (input & J_B)
         {
-            phase = 0;
-            CBTFX_PLAY_confirm;
+            phase = 1;
+            CBTFX_PLAY_nope;
             return;
         }
 
@@ -131,9 +133,8 @@ void StyleSelection(void)
 
         if (input & J_A)
         {
-            // left-shift by 1, then update settings to account for current selection
-            // settings << 1;
-            // settings = settings | cur_selection;
+            // update settings to account for current selection and left shift to game mode selection
+            settings = (settings & 0b1111111101111111) | cur_selection << 7;
             CBTFX_PLAY_confirm;
             phase = 3;
 
@@ -203,9 +204,8 @@ void ModeSelection(void)
 
         if (input & J_A)
         {
-            // left-shift by two, then update settings to account for current selection
-            // settings << 2;
-            // settings = settings | cur_selection;
+            // update settings to account for current selection
+            settings = (settings & 0b1111111110011111) | cur_selection << 5;
             phase = 4;
 
             if (cur_selection > 0)
@@ -285,23 +285,22 @@ void MusicSelection(void)
 
         if (input & J_A)
         {
-            // left-shift by two, then update settings to account for current selection
-            // settings << 2;
-            // settings = settings | cur_selection;
+            // update settings to account for current selection
+            settings = (settings & 0b1111111111100111) | cur_selection << 3;
             CBTFX_PLAY_confirm;
             phase = 5;
 
-            if (cur_selection > 0)
-            {
-                CBTFX_PLAY_nope;
-                PerformantDelay(16);
-                DisplayDialogBox(incomplete);
-                move_win(7, 112);
-                fill_win_rect(0, 0, 31, 31, 0xAF);
-                set_win_based_tiles(0, 0, 20, 4, uimap_select_curtain_map, 0x3B);
-                phase = 4;
-                return;
-            }
+            // if (cur_selection > 0)
+            // {
+            //     CBTFX_PLAY_nope;
+            //     PerformantDelay(16);
+            //     DisplayDialogBox(incomplete);
+            //     move_win(7, 112);
+            //     fill_win_rect(0, 0, 31, 31, 0xAF);
+            //     set_win_based_tiles(0, 0, 20, 4, uimap_select_curtain_map, 0x3B);
+            //     phase = 4;
+            //     return;
+            // }
 
             WindowClose();
             move_bkg(0, 144);
@@ -336,7 +335,7 @@ void MusicSelection(void)
 void PuzzleSelection(void)
 {
     // prevent two subsequent A- or B-presses
-    
+
     waitpadup();
 
     cursor_x = 15;
@@ -351,74 +350,74 @@ void PuzzleSelection(void)
     phase = 6;
     return;
     /* Loop forever... at least until the break statments. */
-/* 
-    while (1)
-    {
-        input = joypad();
-
-        SoftReset(input);
-
-        if (input & J_UP && cursor_y > 27)
+    /*
+        while (1)
         {
-            cur_selection -= 4;
-            cursor_y--;
-            CBTFX_PLAY_tick;
+            input = joypad();
+
+            SoftReset(input);
+
+            if (input & J_UP && cursor_y > 27)
+            {
+                cur_selection -= 4;
+                cursor_y--;
+                CBTFX_PLAY_tick;
+            }
+
+            if (input & J_DOWN && cursor_y < 28)
+            {
+                cur_selection += 4;
+                cursor_y++;
+                CBTFX_PLAY_tick;
+            }
+
+            if (input & J_RIGHT && cursor_x < 18)
+            {
+                cur_selection++;
+                cursor_x++;
+                CBTFX_PLAY_tick;
+            }
+
+            if (input & J_RIGHT && cursor_x > 15)
+            {
+                cur_selection--;
+                cursor_x--;
+                CBTFX_PLAY_tick;
+            }
+
+            if (input & J_A)
+            {
+                // left-shift by two, then update settings to account for current selection
+                settings << 2;
+                settings = settings | cur_selection;
+                CBTFX_PLAY_confirm;
+                phase = 6;
+
+                return;
+            }
+
+            if (input & J_B)
+            {
+                phase = 4;
+                CBTFX_PLAY_confirm;
+
+                WindowClose();
+                move_bkg(96, 0);
+                move_sprite(0, 88, 32);
+                PerformantDelay(15);
+                WindowOpen();
+
+                return;
+            }
+
+            move_sprite(0, cursor_x, cursor_y);
+
+            // Not easy on the eyes
+            // set_bkg_data(0x4F, 1, tiles_general_tiles + 960 + (16 * (g_framecounter % 4)));
+            WaitNewInput(input);
+            IncrementFrame();
         }
-
-        if (input & J_DOWN && cursor_y < 28)
-        {
-            cur_selection += 4;
-            cursor_y++;
-            CBTFX_PLAY_tick;
-        }
-
-        if (input & J_RIGHT && cursor_x < 18)
-        {
-            cur_selection++;
-            cursor_x++;
-            CBTFX_PLAY_tick;
-        }
-
-        if (input & J_RIGHT && cursor_x > 15)
-        {
-            cur_selection--;
-            cursor_x--;
-            CBTFX_PLAY_tick;
-        }
-
-        if (input & J_A)
-        {
-            // left-shift by two, then update settings to account for current selection
-            settings << 2;
-            settings = settings | cur_selection;
-            CBTFX_PLAY_confirm;
-            phase = 6;
-
-            return;
-        }
-
-        if (input & J_B)
-        {
-            phase = 4;
-            CBTFX_PLAY_confirm;
-
-            WindowClose();
-            move_bkg(96, 0);
-            move_sprite(0, 88, 32);
-            PerformantDelay(15);
-            WindowOpen();
-
-            return;
-        }
-
-        move_sprite(0, cursor_x, cursor_y);
-
-        // Not easy on the eyes
-        // set_bkg_data(0x4F, 1, tiles_general_tiles + 960 + (16 * (g_framecounter % 4)));
-        WaitNewInput(input);
-        IncrementFrame();
-    }
-     */
+         */
 }
 
 void WindowOpen(void)
@@ -450,7 +449,7 @@ void WindowClose(void)
     return;
 }
 
-uint8_t SelectionMainLoop(void)
+uint16_t SelectionMainLoop(void)
 {
     uint8_t input = 0;
 
@@ -512,9 +511,13 @@ uint8_t SelectionMainLoop(void)
         }
     }
 
-    NR52_REG = 0x00; // Disable all sound
-    NR51_REG = 0x00; // Disable all channels
-    NR50_REG = 0x00; // Mute both left and right speakers
+    // DisplayDialogBoxNumber("Settings: %d", settings);
+
+    hUGEPauseMusic();
+
+    // NR52_REG = 0x00; // Disable all sound
+    // NR51_REG = 0x00; // Disable all channels
+    // NR50_REG = 0x00; // Mute both left and right speakers
 
     WhtFadeOut(4);
     HIDE_BKG;
