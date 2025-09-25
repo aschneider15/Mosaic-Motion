@@ -368,8 +368,8 @@ uint16_t CalculateScore(void)
     // Constants (scaled down to fit within 16-bit)
     const uint16_t max_time_bonus = 50000; // Scaled max time bonus
     const uint16_t base_score = 10000;     // Base score for completing puzzle
-    // The bigger the board size, the smaller the penalty.
-    const uint8_t move_penalty = 120 / board_size; // Penalty per operation
+    // The bigger the board size, the smaller the penalty. Was a const, but not sure if this causes problems for read-only since board_size is not also a const.
+    uint8_t move_penalty = 120 / board_size; // Penalty per operation
     const uint16_t max_time = 14400;               // Max time (4 minutes in frames)
 
     // Calculate elapsed frames

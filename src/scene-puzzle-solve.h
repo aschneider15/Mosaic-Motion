@@ -102,6 +102,10 @@ inline void CheckWinCondition(void);
  */
 uint16_t CalculateScore(void);
 
+/* Uses current framecounter, as well as seconds and minutes, to update the timer for Strategist Mode.
+ */
+void UpdateTimer(void);
+
 /* Operates the main loop for the Standard Mode scene.
  */
 void StandardModeMainLoop(uint16_t settings);

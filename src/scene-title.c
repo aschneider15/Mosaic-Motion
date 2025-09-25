@@ -28,21 +28,21 @@ uint8_t TitleMainLoop(void) BANKED
     uint8_t input = 0x00;
 
     NR52_REG = 0b10000000; // enable all sound
-    NR51_REG = 0xFF; // enable all channels
-    NR50_REG = 0x77; // turn on stereo speakers
+    NR51_REG = 0xFF;       // enable all channels
+    NR50_REG = 0x77;       // turn on stereo speakers
 
     // External song declaration
     extern const hUGESong_t bgm_title;
     // Initialize the music
     hUGE_init(&bgm_title);
-    
+
     TitleInit();
-    
+
     SHOW_BKG;
     WhtFadeIn(4);
-    
+
     hUGEResumeMusic();
-    
+
     while (!(input == J_START))
     {
         input = joypad();
@@ -59,7 +59,6 @@ uint8_t TitleMainLoop(void) BANKED
     // NR52_REG = 0x00;  // Disable all sound
     // NR51_REG = 0x00;  // Disable all channels
     // NR50_REG = 0x00;  // Mute both left and right speakers
-
 
     WhtFadeOut(4);
     HIDE_BKG;

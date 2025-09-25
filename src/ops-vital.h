@@ -47,7 +47,7 @@ inline void SetBKGBankedData(uint8_t first_tile, uint8_t nb_tiles, const uint8_t
  */
 inline void SetTilemapBankedData(uint8_t x, uint8_t y, uint8_t w, uint8_t h, const uint8_t *tiles, uint8_t bank);
 
-/* Waits until the user has let go of a given input before processing a new one. This is done by calling itself recursively. 
+/* Waits until the user has let go of a given input before processing a new one. This is done by calling itself recursively.
    This function yields better battery life than waitpadup() because it doesn't eat up CPU cycles.
     @param previous_input The player's previous input.
  */
@@ -67,10 +67,7 @@ inline void IncrementFrame(void);
 /* Call to pause current music track */
 void hUGEPauseMusic(void);
 
-/* Call to resume the current music track */
+/* Call to resume the current music track. If no new hUGE song has been initialized, it will carry on where you left off */
 void hUGEResumeMusic(void);
-
-
-
 
 #endif

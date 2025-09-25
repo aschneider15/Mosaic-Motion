@@ -25,29 +25,19 @@ For anyone wondering, my favorite part to work on so far has been the soundtrack
 - [GBDK Documentation](https://gbdk-2020.github.io/gbdk-2020/docs)
 - [Larold's Jubilant Junkyard](https://laroldsjubilantjunkyard.com/)
 
-## The "Rules":
+## What I'm working toward right now!
+Last updated 09/25/2025
 
-### Naming Conventions:
+## Modularization
 
-- General C language elements
+- Mostly in regard to the Puzzle Solve scene. I'm hoping to break it up so that I can reuse bits and pieces, such as the GetTiles, SetCurrentPuzzleData and RandomizeTiles functions, as well as the feature that I'm going to mention next. Really, the way I'm going to lay it out ideally is have a series of new source files which contain helper functions to support a Standard-Puzzle, Shift-Puzzle and Twist-Puzzle scene.   
 
-| Item              | Convention                  |
-| ----------------- | --------------------------- |
-| File Name         | multiple-words.c (.h, etc.) |
-| Struct            | TitleCase                   |
-| Struct Members    | lower_case                  |
-| Enum              | ETitleCase                  |
-| Enum Members      | ALL_CAPS                    |
-| Functions         | TitleCase                   |
-| Trivial variables | i,x,n,f etc...              |
-| Local variables   | lower_case                  |
-| Global variables  | g_lower_case \*2            |
+## Time Attack Mode
 
-    - \*1 pfx = two or three letter module prefix
-    - \*2 lead with g\_ so that it's easier to lookup globals
-
-- GBKD-specific elements
-
-| Item      | Convention                  |
-| --------- | --------------------------- |
-| File Name | multiple-words.c (.h, etc.) |
+- Start with a base time, \(which the player may be allowed to select, I haven't decided yet\), and create a seperate UpdateTimer function which counts *down* from the original time rather than counting up.
+  - I think my original idea was to have them pick between a few time options, which will probably be easiest to implement in a possible scoreboard feature
+- When a time of 00:10:00 is reached, play a sound effect that indicates time is running out
+- I also might change the music, similar to how Tetris's music speeds up when you get close to the line at the top of the screen. 
+- The goal of Time Attack is to solve as many puzzles as possible in the given time limit, so the engine will have to generate a new puzzle every time the player completes one.
+  - I think it would be fun to have little transitions between puzzles, kind of like how battle transitions worked in the Pokemon games back in the day
+  - Fade to black, slide to the side, drop to the bottom, scattered replacement, "shrink," etc.
